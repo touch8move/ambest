@@ -1,0 +1,57 @@
+<md-dialog aria-label="Create"  ng-cloak>  
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Create</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-svg-src="assets/images/ic_close_white_48px.svg" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="dialog">
+  <form name="createForm">
+
+    <md-input-container>
+      <label>Title</label>
+      <input type="text" ng-model="title" required md-maxlength="10" aria-label="Input Content">
+      <div ng-messages="createForm.title.$error" ng-show="createForm.title.$dirty">
+        <div ng-message="required">This is required!</div>
+        <div ng-message="md-maxlength">That's too long!</div>
+        <div ng-message="minlength">That's too short!</div>
+      </div>
+    </md-input-container>
+    <div flow-init="{target: '/upload'}"
+     flow-files-submitted="$flow.upload()"
+     flow-file-success="$file.msg = $message">
+      <md-button class="md-icon-button img-upload" aria-label="imgupload">
+        <md-icon md-svg-src="assets/images/ic_photo_camera_white_48px.svg" flow-btn></md-icon>
+      </md-button>
+      <img flow-img="$flow.files[0]" class="upload-image"/>
+    </div>
+    <md-input-container>
+      <label>Video</label>
+      <md-button class="md-icon-button img-upload" aria-label="imgupload">
+        <md-icon md-svg-src="assets/images/ic_videocam_white_48px.svg" ng-click=""></md-icon>
+      </md-button>
+      <youtube-video video-url="youtubeUrl"></youtube-video>
+    </md-input-container>
+    
+    <md-input-container>
+      <label>Content</label>
+     <!--  <input type="text" ng-model="content" required md-maxlength="20" aria-label="Input Content" columns="3"> -->
+     <textarea ng-model="content" required md-maxlength="20"></textarea>
+      <div ng-messages="createForm.content.$error" ng-show="createForm.content.$dirty">
+        <div ng-message="required">This is required!</div>
+        <div ng-message="md-maxlength">That's too long!</div>
+        <div ng-message="minlength">That's too short!</div>
+      </div>
+    </md-input-container>
+    
+  </form>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <md-button ng-click="create()">
+      <md-icon md-svg-src="assets/images/ic_done_white_48px.svg" aria-label="Done"></md-icon>
+    </md-button>
+  </div>
+</md-dialog>

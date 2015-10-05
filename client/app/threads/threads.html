@@ -1,0 +1,12 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+	<div class="contents_lists">
+		<div class="col-md-6 col-md-offset-3">
+			<button class="btn btn-default" ng-click="new()">new</button>
+			<div class="card" ng-repeat="thread in threads">
+				<span>{{thread.title}}</span>
+				<span>{{thread.contents}}</span>
+			</div>
+		</div>
+	</div>
+</div>
