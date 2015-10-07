@@ -9,7 +9,7 @@ angular.module('ambestApp', [
   'ui.bootstrap',
   'ngMaterial',
   'flow',
-  'youtube-embed'
+  // 'youtube-embed'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -57,9 +57,10 @@ angular.module('ambestApp', [
     });
   })
 
-  .config(['flowFactoryProvider', function (flowFactoryProvider) {
+  .config(function (flowFactoryProvider) {
     flowFactoryProvider.defaults = {
-        target: '/upload',
+        target: '/api/files/upload',
+        singleFile: true,
         permanentErrors:[404, 500, 501]
     };
     // You can also set default events:
@@ -68,4 +69,4 @@ angular.module('ambestApp', [
     });
     // Can be used with different implementations of Flow.js
     // flowFactoryProvider.factory = fustyFlowFactory;
-}])
+})

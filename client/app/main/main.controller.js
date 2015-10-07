@@ -6,21 +6,19 @@ angular.module('ambestApp')
     // $scope.$on('$destroy', function () {
     //   socket.unsyncUpdates('thing');
     // });
-    $scope.showAlert = function() {
-      var alert = $mdDialog.alert({
-        title: 'Attention',
-        content: 'This is an example of how easy dialogs can be!',
-        ok: 'Close'
-      });
-      $mdDialog
-        .show( alert )
-        .finally(function() {
-          alert = undefined;
-        });
+
+    $scope.uploads = []
+    $scope.dataload = function () {
+      $http.get('/api/uploads')
+      .then(function (list) {
+        $scope.uploads = list.data
+      })
     }
     $scope.showAdvanced = function(ev) {
       $mdDialog.show({
-        controller: DialogController,
+        scope:$scope,
+        preserveScope:true,
+        controller: 'DialogController',
         templateUrl: 'app/main/create.html',
         parent: angular.element(document.body),
         targetEvent: ev,
@@ -33,17 +31,38 @@ angular.module('ambestApp')
       });
     };
     $scope.youtubeUrl = null
+
     $scope.addYoutube = function(url) {
       $scope.youtubeUrl = url
     }
-  });
+    $scope.dataload()
+  })
 
-function DialogController($scope, $mdDialog) {
-
+.controller('DialogController', function($scope, $mdDialog, $http, flowFactory) {
+  $scope.title = "타이틀 입력"
+  $scope.content = "내용입력"
+  $scope.tmpFileName = null
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
-  $scope.create = function(answer) {
-    
-  };
-}
+  $scope.create = function() {
+    $http.post('/api/uploads', 
+      {
+        title: $scope.title, 
+        content: $scope.content,
+        tmpFileName: $scope.tmpFileName,
+      })
+    .then(function (res) {
+      // console.log(res.data)
+      $mdDialog.hide()
+      $scope.dataload()
+    }, function (error) {
+      console.log(error)
+
+    })
+  }
+  $scope.getTmpFileName = function ($file, $message) {
+    // console.log('message:',$message)
+    $scope.tmpFileName = $message
+  }
+})
