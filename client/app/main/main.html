@@ -1,6 +1,7 @@
 <md-button class="md-fab md-primary fab-fixed" aria-label="Create" ng-click="showAdvanced($event)">
   <md-icon md-svg-src="assets/images/ic_create_white_48px.svg"></md-icon>
 </md-button>
+<div layout="column" layout-align="center center">
 <md-card class="md-card" ng-repeat="upload in uploads">
 <img ng-src="{{upload.imgFilePath}}" class="md-card-image">
 <md-card-content>
@@ -14,3 +15,4 @@
   <md-button>Action 2</md-button>
 </div> -->
 </md-card>
+</div>

@@ -42,6 +42,9 @@ angular.module('ambestApp')
   $scope.title = "타이틀 입력"
   $scope.content = "내용입력"
   $scope.tmpFileName = null
+  $scope.items = []
+
+  
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
@@ -49,8 +52,7 @@ angular.module('ambestApp')
     $http.post('/api/uploads', 
       {
         title: $scope.title, 
-        content: $scope.content,
-        tmpFileName: $scope.tmpFileName,
+        content: $scope.items,
       })
     .then(function (res) {
       // console.log(res.data)
@@ -65,4 +67,12 @@ angular.module('ambestApp')
     // console.log('message:',$message)
     $scope.tmpFileName = $message
   }
+  $scope.add = function () {
+    $scope.items.push({
+      content:"",
+      tmpFileName:""
+    })
+  }
+
+  $scope.add()
 })

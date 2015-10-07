@@ -15,39 +15,30 @@
   </md-toolbar>
   <md-dialog-content>
   <form name="createForm" role="form">
-    <md-input-container>
-      <label>Title</label>
-      <input type="text" ng-model="title" required md-maxlength="50" minlength="5" aria-label="Input Content">
-    </md-input-container>
-
-    <md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
-      <md-icon md-svg-src="assets/images/ic_photo_camera_white_48px.svg" aria-label="Photo"></md-icon>
-    </md-button>
-    <!-- <md-button aria-label="Youtube" class="md-fab md-primary md-raised md-mini">
-      <md-icon md-svg-src="assets/images/ic_videocam_white_48px.svg" aria-label="Youtube"></md-icon>
-    </md-button> -->
-
-    <div>
-      <img ng-model="file" flow-img="$flow.files[0]" class="upload-image"/>
-      <!-- <div layout="row">{{$flow.files[0].name}}</div> -->
+    <div layout="column" layout-align="center center">
+      <div>
+        <md-input-container>
+          <label>Title</label>
+          <input type="text" ng-model="item.title" required md-maxlength="50" minlength="5" aria-label="Input Content">
+        </md-input-container>
+      </div>
+      <md-card class="md-card" ng-repeat="item in items">
+        <md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
+          <md-icon md-svg-src="assets/images/ic_photo_camera_white_48px.svg" aria-label="Photo"></md-icon>
+        </md-button>
+        <div>
+          <img flow-img="$flow.files[0]" class="upload-image"/>
+        </div>
+        
+        <md-input-container>
+          <label>Content</label>
+         <textarea ng-model="item.content" md-maxlength="20"></textarea>
+        </md-input-container>
+      </md-card>
     </div>
-    <!-- <md-input-container>
-      <label>Video</label>
-      <md-button class="md-icon-button img-upload" aria-label="imgupload">
-        <md-icon md-svg-src="assets/images/ic_videocam_white_48px.svg" ng-click=""></md-icon>
-      </md-button>
-      <youtube-video video-url="youtubeUrl"></youtube-video>
-    </md-input-container> -->
-    
-    <md-input-container>
-      <label>Content</label>
-     <textarea ng-model="content" md-maxlength="20"></textarea>
-      <!-- <div ng-messages="createForm.content.$error" ng-show="createForm.content.$dirty">
-        <div ng-message="required">This is required!</div>
-        <div ng-message="md-maxlength">That's too long!</div>
-        <div ng-message="minlength">That's too short!</div>
-      </div> -->
-    </md-input-container>
+    <md-button class="md-raised md-primary" ng-click="add()">
+      <md-icon md-svg-src="assets/images/ic_add_white_48px.svg" aria-label="add"></md-icon>
+    </md-button>
   </form>
   </md-dialog-content>
   <div class="md-actions" layout="row">
