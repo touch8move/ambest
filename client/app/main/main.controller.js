@@ -55,7 +55,7 @@ angular.module('ambestApp')
     $scope.dataload()
   })
 
-.controller('DialogController', function($scope, $mdDialog, $http, flowFactory) {
+.controller('DialogController', function($scope, $mdDialog, $http, flowFactory, articleTitle) {
   console.log('articleTitle', articleTitle)
   $scope.articleTitle = articleTitle
   $scope.title = "타이틀 입력"
@@ -94,7 +94,7 @@ angular.module('ambestApp')
   $scope.add()
 })
 
-.controller('ViewController', function ($scope, $mdDialog, $http) {
+.controller('ViewController', function ($scope, $mdDialog, $http, articleId) {
   $scope.article = null
   // console.log('articleId', articleId)
   $http.get('/api/uploads/'+articleId)
@@ -117,12 +117,12 @@ angular.module('ambestApp')
       targetEvent: ev,
       clickOutsideToClose:true,
       locals: {
-        articleTitle: 'Challenge'
+        articleTitle: 'Challenge',
         articleId: id
       }
     })
   }
 })
-.controller('ChallengeController', function ($scope, $mdDialog, $http) {
+.controller('ChallengeController', function ($scope, $mdDialog, $http, articleTitle) {
   $scope.articleTitle = articleTitle
 })
