@@ -5,8 +5,10 @@ var mongoose = require('mongoose'),
 
 var UploadSchema = new Schema({
   title: String,
-  imgFilePath: String,
-  content: String
+  items:[{
+  	imgFilePath: String,
+  	content: String
+  }]
 });
 
 module.exports = mongoose.model('Upload', UploadSchema);

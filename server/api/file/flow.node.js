@@ -70,10 +70,12 @@ module.exports = flow = function(temporaryFolder) {
         var totalSize = req.param('flowTotalSize', 0);
         var identifier = req.param('flowIdentifier', "");
         var filename = req.param('flowFilename', "");
-
+        var imgIndex = req.param('imgIndex', 0);
+        console.log('imgIndex', imgIndex)
         if (validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename) == 'valid') {
             console.log('isValid')
-            var chunkFilename = getChunkFilename(chunkNumber, identifier);
+            var chunkFilename = getChunkFilename(chunkNumber, identifier+imgIndex);
+            console.log('chunkFilename', chunkFilename)
             fs.exists(chunkFilename, function(exists) {
                 var tmpFileName = path.basename(chunkFilename)
                 if (exists) {
@@ -101,6 +103,7 @@ module.exports = flow = function(temporaryFolder) {
         var totalSize = fields['flowTotalSize'];
         var identifier = cleanIdentifier(fields['flowIdentifier']);
         var filename = fields['flowFilename'];
+        var imgIndex = fields['imgIndex'];
 
         if (!files[$.fileParameterName] || !files[$.fileParameterName].size) {
             callback('invalid_flow_request', null, null, null);
@@ -110,8 +113,8 @@ module.exports = flow = function(temporaryFolder) {
         var original_filename = files[$.fileParameterName]['originalFilename'];
         var validation = validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename, files[$.fileParameterName].size);
         if (validation == 'valid') {
-            var chunkFilename = getChunkFilename(chunkNumber, identifier);
-
+            // var chunkFilename = getChunkFilename(chunkNumber, identifier);
+            var chunkFilename = getChunkFilename(chunkNumber, identifier+imgIndex);
             // Save the chunk (TODO: OVERWRITE)
             fs.rename(files[$.fileParameterName].path, chunkFilename, function() {
 

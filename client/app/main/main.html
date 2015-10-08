@@ -2,12 +2,12 @@
   <md-icon md-svg-src="assets/images/ic_create_white_48px.svg"></md-icon>
 </md-button>
 <div layout="column" layout-align="center center">
-<md-card class="md-card" ng-repeat="upload in uploads">
-<img ng-src="{{upload.imgFilePath}}" class="md-card-image">
+<md-card class="md-card" ng-repeat="upload in uploads" ng-click="showArticle(upload._id)">
+<img ng-src="{{upload.items[0].imgFilePath}}" class="md-card-image">
 <md-card-content>
   <h2 class="md-title">{{upload.title}}</h2>
   <p>
-    {{upload.content}}
+    {{upload.items[0].content}}
   </p>
 </md-card-content>
 <!-- <div class="md-actions" layout="row" layout-align="end center">
