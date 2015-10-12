@@ -6,45 +6,65 @@ angular.module('ambestApp')
     // $scope.$on('$destroy', function () {
     //   socket.unsyncUpdates('thing');
     // });
+    $scope.dialogStack = []
 
     $scope.uploads = []
+
+    $scope.cancel = function() {
+      $scope.dialogStack.pop()
+      
+      $mdDialog.cancel();
+      if($scope.dialogStack.length > 0) {
+        console.log("multi")
+        $mdDialog.show($scope.dialogStack[$scope.dialogStack.length-1])
+      }
+      
+    };
     $scope.dataload = function () {
       $http.get('/api/uploads')
       .then(function (list) {
         $scope.uploads = list.data
       })
     }
-    $scope.showAdvanced = function(ev) {
-      $mdDialog.show({
+    $scope.showAdvanced = function($event) {
+      $scope.dialogStack.push({
         scope:$scope,
         preserveScope:true,
         controller: 'DialogController',
         templateUrl: 'app/main/create.html',
         parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
+        targetEvent: $event,
+        clickOutsideToClose:false,
         locals: {
           articleTitle: 'Create'
         }
       })
+      $mdDialog.show($scope.dialogStack[$scope.dialogStack.length-1])
       .then(function(answer) {
         
       }, function() {
         
       })
     }
-    $scope.showArticle = function(id, ev) {
-      $mdDialog.show({
+    $scope.showArticle = function(id, $event) {
+      $scope.dialogStack.push({
         scope:$scope,
         preserveScope:true,
         controller: 'ViewController',
         templateUrl: 'app/main/view.html',
         parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
+        targetEvent: $event,
+        clickOutsideToClose:false,
         locals: {
           articleId: id
         }
+      })
+
+      $mdDialog.show($scope.dialogStack[$scope.dialogStack.length-1])
+      .then(function(){
+
+      }, function(ret) {
+
       })
     }
     $scope.youtubeUrl = null
@@ -61,10 +81,6 @@ angular.module('ambestApp')
   $scope.title = "타이틀 입력"
   $scope.items = []
 
-  
-  $scope.cancel = function() {
-    $mdDialog.cancel();
-  };
   $scope.create = function() {
     $http.post('/api/uploads', 
       {
@@ -72,7 +88,7 @@ angular.module('ambestApp')
         items: $scope.items,
       })
     .then(function (res) {
-      // console.log(res.data)
+      $scope.dialogStack.pop()
       $mdDialog.hide()
       $scope.dataload()
     }, function (error) {
@@ -96,7 +112,7 @@ angular.module('ambestApp')
 
 .controller('ViewController', function ($scope, $mdDialog, $http, articleId) {
   $scope.article = null
-  // console.log('articleId', articleId)
+  
   $http.get('/api/uploads/'+articleId)
   .then(function (article) {
     $scope.article = article.data
@@ -104,25 +120,28 @@ angular.module('ambestApp')
 
   })
 
-  $scope.cancel = function() {
-    $mdDialog.cancel();
-  }
-  $scope.challenge = function (id, ev) {
-    $mdDialog.show({
+  $scope.challenge = function (id, $event) {
+    $scope.dialogStack.push({
       scope:$scope,
       preserveScope:true,
       controller: 'ChallengeController',
-      templateUrl: 'app/main/view.html',
+      templateUrl: 'app/main/create.html',
       parent: angular.element(document.body),
-      targetEvent: ev,
-      clickOutsideToClose:true,
+      targetEvent: $event,
+      clickOutsideToClose:false,
       locals: {
         articleTitle: 'Challenge',
         articleId: id
       }
     })
+    $mdDialog.show($scope.dialogStack[$scope.dialogStack.length-1])
+    .then( function () {
+    }, function () {
+
+    })
   }
 })
-.controller('ChallengeController', function ($scope, $mdDialog, $http, articleTitle) {
+.controller('ChallengeController', function ($scope, $mdDialog, $http, articleId, articleTitle) {
   $scope.articleTitle = articleTitle
+  $scope.articleId = articleId
 })

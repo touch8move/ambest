@@ -1,8 +1,9 @@
 <md-button class="md-fab md-primary fab-fixed" aria-label="Create" ng-click="showAdvanced($event)">
   <md-icon md-svg-src="assets/images/ic_create_white_48px.svg"></md-icon>
 </md-button>
+
 <div layout="column" layout-align="center center">
-<md-card class="md-card" ng-repeat="upload in uploads" ng-click="showArticle(upload._id)">
+<md-card class="md-card" ng-repeat="upload in uploads" ng-click="showArticle(upload._id, $event)">
 <img ng-src="{{upload.items[0].imgFilePath}}" class="md-card-image">
 <md-card-content>
   <h2 class="md-title">{{upload.title}}</h2>

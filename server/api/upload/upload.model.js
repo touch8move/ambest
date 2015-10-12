@@ -8,6 +8,13 @@ var UploadSchema = new Schema({
   items:[{
   	imgFilePath: String,
   	content: String
+  }],
+  challenges:[{
+  	title: String,
+  	items:[{
+  		imgFilePath: String,
+  		content: String
+  	}]
   }]
 });
 
