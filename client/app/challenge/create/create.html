@@ -1,0 +1,44 @@
+<div aria-label="Create" ng-cloak>
+
+  <div class="md-toolbar-tools">
+    <h2>Challenge</h2>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="cancel()" aria-label="Close">
+      <ng-md-icon icon="close"></ng-md-icon>
+    </md-button>
+  </div>
+
+  <md-content class="md-padding">
+    <!-- <form name="createForm" role="form"> -->
+      <md-input-container>
+        <label>Title</label>
+        <input type="text" ng-model="challenge.title" required md-maxlength="50" minlength="5" aria-label="Input Content">
+      </md-input-container>
+
+      <md-card class="md-card" ng-repeat="item in challenge.challengeItems" 
+        flow-init="{query:{imgIndex:$index}}"
+        flow-files-submitted="$flow.upload()"
+        flow-file-success="getTmpFileName($file, $message, $index)">
+
+        <md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
+          <ng-md-icon icon="photo" style="fill:#ffffff"></ng-md-icon>
+        </md-button>
+
+        <img flow-img="$flow.files[0]" class="upload-image"/>
+
+        <md-input-container>
+          <label>Content</label>
+         <textarea ng-model="item.content" md-maxlength="20"></textarea>
+        </md-input-container>
+      </md-card>
+    <!-- </form> -->
+    <md-button class="md-raised md-primary" ng-click="add()" aria-label="Add">
+      <ng-md-icon icon="add" aria-label="add"></ng-md-icon>
+    </md-button>
+    <div class="md-actions" layout="row">
+    <md-button class="md-raised md-warn" ng-click="create()">
+      <ng-md-icon icon="Done" aria-label="Done"></ng-md-icon>
+    </md-button>
+  </div>
+  </md-content>
+</div>

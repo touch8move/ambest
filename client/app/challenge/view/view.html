@@ -1,0 +1,41 @@
+<div aria-label="View"  ng-cloak>
+  <md-content>
+    <md-button class="md-raised md-primary" ng-click="prev()" aria-label="prev">
+      <ng-md-icon icon="keyboard_arrow_left"></ng-md-icon>
+    </md-button>
+    <md-button class="md-raised md-primary" ng-click="next()" aria-label="next">
+      <ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>
+    </md-button>
+    <md-tabs md-dynamic-height md-swipe-content="true" md-selected="selectedIndex">
+      <md-tab ng-repeat="challenge in challenges">
+
+        <md-tab-label>
+          challenge{{$index}}
+        </md-tab-label>
+        <md-tab-body>
+          <md-button ng-if="!challenge.isLike" class="md-raised md-primary" aria-label="thumbup" ng-click="thumbup(challenge)">
+            <ng-md-icon icon="thumb_up"></ng-md-icon>
+          </md-button >
+          <md-button ng-if="challenge.isMine" class="md-raised md-warn" aria-label="edit" ng-click="editChallenge(challenge)">
+            <ng-md-icon icon="create"></ng-md-icon>
+          </md-button>
+          <md-button ng-if="challenge.isMine" class="md-raised md-warn" aria-label="delete" ng-click="delChallenge(challenge)">
+            <ng-md-icon icon="delete"></ng-md-icon>
+          </md-button>
+          <md-button ng-if="challenge.isLike" class="md-raised md-primary" aria-label="cancelthumbup" ng-click="cancelthumbup(challenge)">
+            <ng-md-icon icon="thumb_up" style="fill:red"></ng-md-icon>
+          </md-button>
+          {{challenge.likeCount}}
+          <md-card class="md-card" ng-repeat="item in challenge.challengeItems">
+            <div>
+              <img ng-src="{{item.imgPath}}" class="md-card-image">
+            </div>
+            <p>
+              {{item.content}}
+            </p>
+          </md-card>
+        </md-tab-body>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>

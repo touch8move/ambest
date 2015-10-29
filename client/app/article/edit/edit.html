@@ -1,0 +1,37 @@
+<div aria-label="Edit"  ng-cloak>
+  <div>
+    <h2>Edit</h2>
+  </div>
+    
+  <md-content class="md-padding">
+    <form name="createForm" role="form">    
+      <md-input-container>
+        <label>Title</label>
+        <input type="text" ng-model="article.title" required md-maxlength="100" minlength="5" aria-label="Input Title">
+      </md-input-container>
+      <div
+        flow-init
+        flow-files-submitted="$flow.upload()" 
+        flow-file-success="getTmpFileName($file, $message)">
+        <md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
+          <ng-md-icon icon="photo" style="fill:#ffffff"></ng-md-icon>
+        </md-button>
+        
+        <img ng-if="changeFile" flow-img="$flow.files[0]" class="upload-image"/>
+        <img ng-if="!changeFile" src="{{article.imgPath}}" />
+        
+        <md-input-container>
+          <label>Content</label>
+          <textarea ng-model="article.content"></textarea>
+        </md-input-container>
+      </div>
+      <md-button aria-label="post" class="md-raised md-mini md-warn" ng-click="cancel()">
+        <ng-md-icon icon="cancel" style="fill:#ffffff"></ng-md-icon>
+      </md-button>
+      <md-button aria-label="post" class="md-raised md-mini md-primary" ng-click="edit()">
+        <ng-md-icon icon="save" style="fill:#ffffff"></ng-md-icon>
+      </md-button>
+    </form>
+  </md-content>
+
+</div>
