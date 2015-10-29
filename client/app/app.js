@@ -9,6 +9,7 @@ angular.module('ambestApp', [
   'ui.bootstrap',
   'ngMaterial',
   'flow',
+  'ngMdIcons'
   // 'youtube-embed'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
@@ -42,9 +43,37 @@ angular.module('ambestApp', [
           return $q.reject(response);
         }
       }
-    };
+    }
   })
-
+  .factory('Articles', function ($resource) {
+    return $resource('/api/articles/:id', {
+      id: '@_id'
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    })
+  })
+  .factory('Challenges', function ($resource) {
+    return $resource('/api/challenges/:id/:controller', {
+      id: '@_id',
+    })
+  })
+  .factory('Likes', function ($resource) {
+    return $resource('/api/likes/:id/:controller', {
+      id: '@_id'
+    })
+  })
+  .factory('Replys', function ($resource) {
+    return $resource('/api/replys/:id', {
+      id: '@_id'
+    }, {
+      update: {
+        method: 'PUT'
+      }
+    })
+  })
+  
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, next) {

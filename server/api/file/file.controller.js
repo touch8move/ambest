@@ -74,7 +74,7 @@ exports.upload = function (req, res, next) {
         status = 204;
       }
 
-      res.status(status).send();
+      res.status(status).send(filename);
     });
 };
 

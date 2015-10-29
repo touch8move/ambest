@@ -7,5 +7,5 @@ angular.module('ambestApp')
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
-      });
-  });
+      })
+	})

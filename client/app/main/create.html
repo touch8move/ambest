@@ -1,9 +1,4 @@
-<md-dialog class="dialog" aria-label="Create"  ng-cloak 
-  flow-init
-  flow-files-submitted="$flow.upload()"
-  flow-file-success="getTmpFileName($file, $message)"
-  >
-
+<md-dialog class="dialog" aria-label="Create"  ng-cloak>
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2>Create</h2>
@@ -14,45 +9,34 @@
     </div>
   </md-toolbar>
   <md-dialog-content>
-  <form name="createForm" role="form">
-    <md-input-container>
-      <label>Title</label>
-      <input type="text" ng-model="title" required md-maxlength="50" minlength="5" aria-label="Input Content">
-    </md-input-container>
-
-    <md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
-      <md-icon md-svg-src="assets/images/ic_photo_camera_white_48px.svg" aria-label="Photo"></md-icon>
-    </md-button>
-    <!-- <md-button aria-label="Youtube" class="md-fab md-primary md-raised md-mini">
-      <md-icon md-svg-src="assets/images/ic_videocam_white_48px.svg" aria-label="Youtube"></md-icon>
-    </md-button> -->
-
-    <div>
-      <img ng-model="file" flow-img="$flow.files[0]" class="upload-image"/>
-      <!-- <div layout="row">{{$flow.files[0].name}}</div> -->
-    </div>
-    <!-- <md-input-container>
-      <label>Video</label>
-      <md-button class="md-icon-button img-upload" aria-label="imgupload">
-        <md-icon md-svg-src="assets/images/ic_videocam_white_48px.svg" ng-click=""></md-icon>
-      </md-button>
-      <youtube-video video-url="youtubeUrl"></youtube-video>
-    </md-input-container> -->
-    
-    <md-input-container>
-      <label>Content</label>
-     <textarea ng-model="content" md-maxlength="20"></textarea>
-      <!-- <div ng-messages="createForm.content.$error" ng-show="createForm.content.$dirty">
-        <div ng-message="required">This is required!</div>
-        <div ng-message="md-maxlength">That's too long!</div>
-        <div ng-message="minlength">That's too short!</div>
-      </div> -->
-    </md-input-container>
-  </form>
+    <md-content class="md-padding">
+      <form name="createForm" role="form">    
+        <md-input-container>
+          <label>Title</label>
+          <input type="text" ng-model="article.title" required md-maxlength="100" minlength="5" aria-label="Input Title">
+        </md-input-container>
+        <div
+          flow-init="{query:{imgIndex:$index}}" 
+          flow-files-submitted="$flow.upload()" 
+          flow-file-success="getTmpFileName($file, $message, $index)">
+          <md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
+            <md-icon md-svg-src="assets/images/ic_photo_camera_white_48px.svg" aria-label="Photo"></md-icon>
+          </md-button>
+          <div>
+            <img flow-img="$flow.files[0]" class="upload-image"/>
+          </div>
+          
+          <md-input-container>
+            <label>Content</label>
+            <textarea ng-model="article.content"></textarea>
+          </md-input-container>
+        </div>
+        <div class="md-actions" layout="row">
+          <md-button class="md-raised md-warn" ng-click="create()">
+            <md-icon md-svg-src="assets/images/ic_navigate_next_white_48px.svg" aria-label="Next"></md-icon>
+          </md-button>
+        </div>
+      </form>
+    </md-content>
   </md-dialog-content>
-  <div class="md-actions" layout="row">
-    <md-button class="md-raised md-warn" ng-click="create()">
-      <md-icon md-svg-src="assets/images/ic_done_white_48px.svg" aria-label="Done"></md-icon>
-    </md-button>
-  </div>
 </md-dialog>

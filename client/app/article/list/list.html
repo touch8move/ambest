@@ -1,0 +1,11 @@
+<div layout="column" layout-align="center center">
+<md-card class="md-card md-whiteframe-15dp" ng-repeat="article in articles" ng-click="go(article._id)">
+	<img ng-src="{{article.imgPath}}" class="md-card-image">
+	<md-card-content>
+	  <h2 class="md-title">{{article.title}}</h2>
+	  <p>
+	    {{article.content}}
+	  </p>
+	</md-card-content>
+</md-card>
+</div>

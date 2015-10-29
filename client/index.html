@@ -14,6 +14,7 @@
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+      <link rel="stylesheet" href="bower_components/angular-material-icons/angular-material-icons.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -29,6 +30,7 @@
 
     <!-- Add your site or application content here -->
     <div ng-include="'components/navbar/navbar.html'"></div>
+    <div ng-include="'components/sidenav/sidenav.html'"></div>
     <div ui-view=""></div>
     
     <!-- <div ng-include="'components/navbar/footer.html'"></div> -->
@@ -66,6 +68,7 @@
       <script src="bower_components/ng-flow/dist/ng-flow.js"></script>
       <script src="bower_components/angular-youtube-mb/src/angular-youtube-embed.js"></script>
       <script src="bower_components/angular-messages/angular-messages.js"></script>
+      <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
@@ -81,13 +84,20 @@
           <script src="app/account/signup/signup.controller.js"></script>
           <script src="app/admin/admin.controller.js"></script>
           <script src="app/admin/admin.js"></script>
+          <script src="app/article/article.js"></script>
+          <script src="app/article/create/create.controller.js"></script>
+          <script src="app/article/edit/edit.controller.js"></script>
+          <script src="app/article/list/list.controller.js"></script>
+          <script src="app/article/view/view.controller.js"></script>
+          <script src="app/challenge/challenge.js"></script>
+          <script src="app/challenge/create/challenge.create.controller.js"></script>
+          <script src="app/challenge/edit/edit.controller.js"></script>
+          <script src="app/challenge/view/challenge.view.controller.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
-          <script src="app/threads/threads.controller.js"></script>
-          <script src="app/threads/threads.js"></script>
-          <script src="app/threads/wysiwyg.js"></script>
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
+          <script src="components/dialog/dialog.service.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/mongoose-error/mongoose-error.directive.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
