@@ -1,14 +1,25 @@
-<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-  <md-toolbar class="md-theme-indigo">
-    <h1 class="md-toolbar-tools">Sidenav Left</h1>
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" ng-clock>
+  <md-toolbar>
+    <!-- <md-icon md-svg-icon="assets/images/ic_person_white_48px.svg"></md-icon> -->
+    <!-- <span flex=""></span> -->
+    <h2 class="md-toolbar-tools">{{getCurrentUser().name}}</h2>
   </md-toolbar>
-  <md-content layout-padding ng-controller="LeftCtrl">
-    <md-button ng-click="close()" class="md-primary" hide-gt-md>
-      Close Sidenav Left
-    </md-button>
-    <p hide-md show-gt-md>
-      This sidenav is locked open on your device. To go back to the default behavior,
-      narrow your display.
-    </p>
+  <md-content ng-controller="AppCtrl" layout-padding>
+    <md-list>
+      <!-- <md-subheader class="md-no-sticky">Account</md-subheader> -->
+      <md-list-item>
+        <p ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}" ng-click="signup()">Sign up</p>
+      </md-list-item>
+      <md-list-item>
+        <p ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}" ng-click="login()">Login</p>
+      </md-list-item>
+      <md-list-item>
+        <p ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}" ng-click="settings()"><span class="glyphicon glyphicon-cog"></span></p>
+      </md-list-item>
+      <md-list-item>
+        <p ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}" ng-click="logout()">Logout</p>
+      </md-list-item>
+      <md-divider ></md-divider>
+    </md-list>
   </md-content>
 </md-sidenav>

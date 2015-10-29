@@ -35,6 +35,27 @@ function isAuthenticated() {
     });
 }
 
+function getUser() {
+  return compose()
+    .use(function(req, res, next) {
+      // allow access_token to be passed through query parameter as well
+      if(req.query && req.query.hasOwnProperty('access_token')) {
+        req.headers.authorization = 'Bearer ' + req.query.access_token;
+      }
+      validateJwt(req, res, next);
+    })
+    // Attach user to request
+    .use(function(req, res, next) {
+      User.findById(req.user._id, function (err, user) {
+        if (err) return next(err);
+        if (!user) user=''
+        req.user = user;
+        next();
+      });
+    });
+
+}
+
 /**
  * Checks if the user role meets the minimum requirements of the route
  */
@@ -70,7 +91,8 @@ function setTokenCookie(req, res) {
   res.redirect('/');
 }
 
-exports.isAuthenticated = isAuthenticated;
-exports.hasRole = hasRole;
-exports.signToken = signToken;
-exports.setTokenCookie = setTokenCookie;
+exports.isAuthenticated = isAuthenticated
+exports.getUser = getUser
+exports.hasRole = hasRole
+exports.signToken = signToken
+exports.setTokenCookie = setTokenCookie

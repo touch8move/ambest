@@ -70,8 +70,8 @@ module.exports = flow = function(temporaryFolder) {
         var totalSize = req.param('flowTotalSize', 0);
         var identifier = req.param('flowIdentifier', "");
         var filename = req.param('flowFilename', "");
-        var imgIndex = req.param('imgIndex', 0);
-        console.log('imgIndex', imgIndex)
+        var imgIndex = req.param('imgIndex', "");
+
         if (validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename) == 'valid') {
             console.log('isValid')
             var chunkFilename = getChunkFilename(chunkNumber, identifier+imgIndex);
@@ -103,7 +103,7 @@ module.exports = flow = function(temporaryFolder) {
         var totalSize = fields['flowTotalSize'];
         var identifier = cleanIdentifier(fields['flowIdentifier']);
         var filename = fields['flowFilename'];
-        var imgIndex = fields['imgIndex'];
+        var imgIndex = fields['imgIndex']?fields['imgIndex']:"";
 
         if (!files[$.fileParameterName] || !files[$.fileParameterName].size) {
             callback('invalid_flow_request', null, null, null);

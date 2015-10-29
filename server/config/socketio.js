@@ -18,10 +18,10 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/file/file.socket').register(socket);
-  require('../api/upload/upload.socket').register(socket);
-  require('../api/threads/threads.socket').register(socket);
-  require('../api/thing/thing.socket').register(socket);
+  require('../api/like/like.socket').register(socket);
+  require('../api/article/article.socket').register(socket);
+  require('../api/reply/reply.socket').register(socket);
+  require('../api/challenge/challenge.socket').register(socket);
 }
 
 module.exports = function (socketio) {

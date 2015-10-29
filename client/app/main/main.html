@@ -1,19 +1,15 @@
-<md-button class="md-fab md-primary fab-fixed" aria-label="Create" ng-click="showAdvanced($event)">
+<md-button class="md-fab md-primary fab-fixed" aria-label="Create" href="#/article/create">
   <md-icon md-svg-src="assets/images/ic_create_white_48px.svg"></md-icon>
 </md-button>
 
 <div layout="column" layout-align="center center">
-<md-card class="md-card" ng-repeat="upload in uploads" ng-click="showArticle(upload._id, $event)">
-<img ng-src="{{upload.items[0].imgFilePath}}" class="md-card-image">
+<md-card class="md-card md-whiteframe-15dp" ng-repeat="challenge in challenges" ng-click="showArticle(challenge._id, $event)">
+<img ng-src="{{challenge.items[0].imgFilePath}}" class="md-card-image">
 <md-card-content>
-  <h2 class="md-title">{{upload.title}}</h2>
+  <h2 class="md-title">{{challenge.title}}</h2>
   <p>
-    {{upload.items[0].content}}
+    {{challenge.items[0].content}}
   </p>
 </md-card-content>
-<!-- <div class="md-actions" layout="row" layout-align="end center">
-  <md-button>Action 1</md-button>
-  <md-button>Action 2</md-button>
-</div> -->
 </md-card>
 </div>

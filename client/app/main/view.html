@@ -3,24 +3,66 @@
     <div class="md-toolbar-tools">
       <h2>{{article.title}}</h2>
       <span flex></span>
+      <md-button class="md-icon-button" ng-click="reply($event)">
+        <md-icon md-svg-src="assets/images/ic_reply_white_48px.svg" aria-label="reply"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" ng-click="challenge($event)">
+        <md-icon md-svg-src="assets/images/oriental.svg" aria-label="challenge"></md-icon>
+      </md-button>
       <md-button class="md-icon-button" ng-click="cancel()">
         <md-icon md-svg-src="assets/images/ic_close_white_48px.svg" aria-label="Close dialog"></md-icon>
       </md-button>
     </div>
   </md-toolbar>
   <md-dialog-content>
-    <div layout="column" layout-align="center center">
-      <md-card class="md-card" ng-repeat="item in article.items">
-        <div>
-          <img ng-src="{{item.imgFilePath}}" class="md-card-image">
-        </div>
-        <p>
-          {{item.content}}
-        </p>
-      </md-card>
+    <md-tabs md-dynamic-height md-swipe-content="true" md-no-pagination="true">
+      <md-tab ng-repeat="challenge in challenges">
+        <md-tab-label>
+          challenge{{$index}}
+        </md-tab-label>
+        <md-tab-body>
+        <form>
+          <md-button ng-if="challenge.isKool" class="md-raised md-primary">
+            <md-icon md-svg-src="assets/images/ic_whatshot_white_48px.svg" aria-label="del kool" ng-click="delKool(challenge._id)"></md-icon>
+          </md-button >
+          <md-button ng-if="!challenge.isKool" class="md-raised md-default">
+            <md-icon md-svg-src="assets/images/ic_whatshot_white_48px.svg" aria-label="kool" ng-click="kool(challenge._id)"></md-icon>
+          </md-button >
+          </form>
+          <div layout="column" layout-align="center center">
+            <md-card class="md-card" ng-repeat="item in challenge.items">
+              <div>
+                <img ng-src="{{item.imgFilePath}}" class="md-card-image">
+              </div>
+              <p>
+                {{item.content}}
+              </p>
+            </md-card>
+          </div>
+        </md-tab-body>
+      </md-tab>
+    </md-tabs>
+    <div class="reply">
+      <div ng-repeat="reply in replys">
+        <img ng-src="{{reply.createdBy.img}}">
+        <h4>{{reply.createdBy.name}}</h4>
+        <!-- {{reply}} -->
+        <span flex>
+        <div>{{reply.content}}</div>
+        <md-divider ng-if="!$last"></md-divider>
+      </div>
     </div>
+    <form name="reply" role="form">
+      <md-input-container>
+        
+      </md-input-container>
+      <p class="input-group">
+        <input type="text" class="form-control" placeholder="reply..." ng-model="reply.content" />
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-primary" ng-click="replyPost()">Send</button>
+        </span>
+      </p>
+    </form>
+
   </md-dialog-content>
-  <md-button class="md-fab md-primary md-raised md-mini" ng-click="challenge(articleId, $event)">
-    <md-icon md-svg-src="assets/images/oriental.svg" aria-label="challenge"></md-icon>
-  </md-button>
 </md-dialog>
