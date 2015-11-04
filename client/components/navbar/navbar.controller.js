@@ -1,7 +1,7 @@
 
 angular.module('ambestApp')
 
-.controller('AppCtrl', function($scope, Auth, $mdUtil, $mdSidenav, $location) {
+.controller('NavCtrl', function($scope, Auth, $mdUtil, $mdSidenav, $location) {
 	$scope.isCollapsed = true
 	$scope.isLoggedIn = Auth.isLoggedIn
 	$scope.isAdmin = Auth.isAdmin

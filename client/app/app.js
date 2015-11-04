@@ -11,12 +11,19 @@ angular.module('ambestApp', [
   'ngMaterial',
   'flow',
   'ngMdIcons',
-  // 'youtube-embed'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/');
-
+    $stateProvider
+      .state('Nav', {
+        views:{
+          'nav': {
+            templateUrl: 'components/navbar/navbar.html',
+            controller: 'NavCtrl'
+          }
+        }
+      })
     // $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
   })

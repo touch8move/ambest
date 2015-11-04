@@ -1,5 +1,5 @@
-<div ng-controller="AppCtrl" layout="culomn" layout-fill>
-  <md-toolbar>
+<md-content>
+  <md-toolbar ng-controller="NavCtrl" class="navbar-fixed">
     <div class="md-toolbar-tools">
       <md-button class="md-icon-button" aria-label="Settings" ng-click="main()">
         <ng-md-icon icon="menu" style="fill:#ffffff"></ng-md-icon>
@@ -13,7 +13,4 @@
       </md-button>
     </div>
   </md-toolbar>
-  <md-button class="md-fab md-primary fab-fixed" aria-label="Create" href="#/article/create">
-    <ng-md-icon icon="create"></md-icon>
-  </md-button>
-</div>
+</md-content>
