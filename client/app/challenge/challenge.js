@@ -5,17 +5,29 @@ angular.module('ambestApp')
 	$stateProvider
 		.state('challengeCreate', {
 			url: '/challenge/create/:articleId',
-			templateUrl: 'app/challenge/create/create.html',
-			controller: 'ChallengeCreateCtrl'
+			views:{
+				'challengeCreate':{
+					templateUrl: 'app/challenge/create/create.html',
+					controller: 'ChallengeCreateCtrl'
+				}
+			}
 		})
 		.state('challengeView', {
 			url: '/challenge/view/:id',
-			templateUrl: 'app/challenge/view/view.html',
-			controller: 'ChallengeViewCtrl'
+			views: {
+				'challengeViews': {
+					templateUrl: 'app/challenge/view/view.html',
+					controller: 'ChallengeViewCtrl'
+				}
+			}
 		})
 		.state('challengeEdit', {
 			url: '/challenge/edit/:articleId/:id',
-			templateUrl: 'app/challenge/edit/edit.html',
-			controller: 'ChallengeEditCtrl'
+			views: {
+				'challengeEdit': {
+					templateUrl: 'app/challenge/edit/edit.html',
+					controller: 'ChallengeEditCtrl'
+				}
+			}
 		})
 })

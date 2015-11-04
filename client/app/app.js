@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('ambestApp', [
+  'ngAnimate',
   'ngCookies',
   'ngResource',
   'ngSanitize',
@@ -9,14 +10,14 @@ angular.module('ambestApp', [
   'ui.bootstrap',
   'ngMaterial',
   'flow',
-  'ngMdIcons'
+  'ngMdIcons',
   // 'youtube-embed'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/');
 
-    $locationProvider.html5Mode(true);
+    // $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
   })
 

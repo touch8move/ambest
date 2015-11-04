@@ -5,18 +5,30 @@ angular.module('ambestApp')
     $stateProvider
       .state('articleCreate', {
         url: '/article/create',
-        templateUrl: 'app/article/create/create.html',
-        controller: 'ArticleCreateCtrl'
+        views:{
+          'create': {
+            templateUrl: 'app/article/create/create.html',
+            controller: 'ArticleCreateCtrl'
+          }
+        }
       })
       .state('articleView', {
         url: '/article/view/:id',
-        templateUrl: 'app/article/view/view.html',
-        controller: 'ArticleViewCtrl'
+        views:{
+          'articleViews':{
+            templateUrl: 'app/article/view/view.html',
+            controller: 'ArticleViewCtrl'
+          }
+        }
       })
       .state('articleList', {
-        url: '/article/list',
-        templateUrl: 'app/article/list/list.html',
-        controller: 'ArticleListCtrl'
+        url: '/',
+        views:{
+          'list':{
+            templateUrl: 'app/article/list/list.html',
+            controller: 'ArticleListCtrl'
+          }
+        }
       })
       .state('articleEdit', {
         url: '/article/edit/:id',

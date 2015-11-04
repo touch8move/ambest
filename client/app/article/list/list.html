@@ -1,11 +1,14 @@
 <div layout="column" layout-align="center center">
-<md-card class="md-card md-whiteframe-15dp" ng-repeat="article in articles" ng-click="go(article._id)">
-	<img ng-src="{{article.imgPath}}" class="md-card-image">
-	<md-card-content>
-	  <h2 class="md-title">{{article.title}}</h2>
-	  <p>
-	    {{article.content}}
-	  </p>
-	</md-card-content>
+  <md-button class="md-fab md-primary fab-fixed" aria-label="Create" href="#/article/create">
+    <md-icon md-svg-src="assets/images/ic_create_white_48px.svg"></md-icon>
+  </md-button>
+  <md-card class="md-card md-whiteframe-15dp" ng-repeat="article in articles" ng-click="go(article._id)">
+  	<img ng-src="{{article.imgPath}}" class="md-card-image">
+  	<md-card-content>
+  	  <h2 class="md-title">{{article.title}}</h2>
+  	  <p>
+  	    {{article.content}}
+  	  </p>
+  	</md-card-content>
 </md-card>
 </div>

@@ -26,9 +26,9 @@ angular.module('ambestApp')
     $scope.isActive = function(route) {
       return route === $location.path()
     }
-    $scope.create = function () {
-    	$location.path('/article/create')
-    }
+    // $scope.create = function () {
+    // 	$location.path('/article/create')
+    // }
     $scope.toggleRight = buildToggler('right')
 
     function buildToggler(navID) {
