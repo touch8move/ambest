@@ -1,15 +1,31 @@
+<header scroll-y-offset-element class="header header-fixed">	
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<md-button class="md-icon-button" aria-label="Settings" href="/#/">
+				<ng-md-icon icon="home" style="fill:#ffffff"></ng-md-icon>
+			</md-button>
+			<h2>
+				List
+			</h2>
+			<span flex=""></span>
+			<md-button class="md-icon-button" aria-label="Settings" ng-click="create()">
+				<ng-md-icon icon="create" style="fill:#ffffff"></ng-md-icon>
+			</md-button>
+			<md-button class="md-icon-button" aria-label="More" ng-click="toggleRight()">
+				<ng-md-icon icon="person" style="fill:#ffffff"></ng-md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+</header>
 
-<div layout="column" layout-align="center center">
-  <md-card class="md-card md-whiteframe-15dp" ng-repeat="article in articles" ng-click="go(article._id)">
-  	<img ng-src="{{article.imgPath}}" class="md-card-image">
-  	<md-card-content>
-  	  <h2 class="md-title">{{article.title}}</h2>
-  	  <p>
-  	    {{article.content}}
-  	  </p>
-  	</md-card-content>
-</md-card>
-  <md-button class="md-fab md-primary fab-fixed" aria-label="Create" href="#/article/create">
-    <ng-md-icon icon="create"></md-icon>
-  </md-button>
+<div class="content" layout="column" layout-align="center center">
+	<md-card class="md-card md-whiteframe-15dp" ng-repeat="article in articles" ng-click="go(article._id)">
+		<img ng-src="{{article.imgPath}}" class="md-card-image">
+		<md-card-content>
+			<h2 class="md-title">{{article.title}}</h2>
+			<p>
+				{{article.content}}
+			</p>
+		</md-card-content>
+	</md-card>
 </div>

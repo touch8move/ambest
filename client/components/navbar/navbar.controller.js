@@ -15,7 +15,7 @@ angular.module('ambestApp')
 		$location.path('/login')
 	}
 	$scope.signup = function() {
-      	$mdSidenav('right').close()
+				$mdSidenav('right').close()
 		$location.path('/signup')
 	}
 	$scope.login = function() {
@@ -23,22 +23,26 @@ angular.module('ambestApp')
 		$location.path('/login')
 	}
 
-    $scope.isActive = function(route) {
-      return route === $location.path()
-    }
-    // $scope.create = function () {
-    // 	$location.path('/article/create')
-    // }
-    $scope.toggleRight = buildToggler('right')
+		$scope.isActive = function(route) {
+			return route === $location.path()
+		}
+		// $scope.create = function () {
+		// 	$location.path('/article/create')
+		// }
+		$scope.toggleRight = buildToggler('right')
 
-    function buildToggler(navID) {
-      var debounceFn =  $mdUtil.debounce(function(){
-            $mdSidenav(navID)
-              .toggle()
-              .then(function () {
-              })
-          },200)
-      return debounceFn
-    }
+		$scope.back = function () {
+			window.history.back()
+		}
+
+		function buildToggler(navID) {
+			var debounceFn =  $mdUtil.debounce(function(){
+						$mdSidenav(navID)
+							.toggle()
+							.then(function () {
+							})
+					},200)
+			return debounceFn
+		}
 })
 

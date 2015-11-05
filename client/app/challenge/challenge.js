@@ -5,6 +5,7 @@ angular.module('ambestApp')
 	$stateProvider
 		.state('challengeCreate', {
 			url: '/challenge/create/:articleId',
+			authenticate: true,
 			views:{
 				'challengeCreate':{
 					templateUrl: 'app/challenge/create/create.html',
@@ -23,6 +24,7 @@ angular.module('ambestApp')
 		})
 		.state('challengeEdit', {
 			url: '/challenge/edit/:articleId/:id',
+			authenticate: true,
 			views: {
 				'challengeEdit': {
 					templateUrl: 'app/challenge/edit/edit.html',

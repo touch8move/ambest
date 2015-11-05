@@ -1,24 +1,36 @@
-<div aria-label="View"  ng-cloak>
-	<md-content>
+<header scroll-y-offset-element class="header header-fixed">
+	<md-toolbar>
 		<div class="md-toolbar-tools">
-			<h2>{{article.title}}</h2>
-			<span flex></span>
-			<md-button ng-if="article.isMine" class="md-raised md-warn" ng-click="editArticle(article)">
-				<ng-md-icon icon="create"></ng-md-icon>
+			<md-button class="md-icon-button" aria-label="back" back>
+				<ng-md-icon icon="clear" style="fill:#ffffff"></ng-md-icon>
 			</md-button>
-			<md-button ng-if="article.isMine" class="md-raised md-warn" ng-click="delArticle(article)">
-				<ng-md-icon icon="delete"></ng-md-icon>
-			</md-button>
-			<md-button class="md-raised md-primary" ng-click="challengerList(article._id)">Challengers</md-button>
-			<md-button class="md-raised md-primary" ng-click="challenge(article._id)">Challenge</md-button>
+			Contest
+			<span flex=""></span>
 		</div>
+	</md-toolbar>
+</header>
+<div class="content" layout="column" layout-align="center center" ng-clock>
+	<div class="md-toolbar-tools">
+		<h2>{{article.title}}</h2>
+		<span flex></span>
+		<md-button ng-if="article.isMine" class="md-raised md-warn" ng-click="editArticle(article)">
+			<ng-md-icon icon="create"></ng-md-icon>
+		</md-button>
+		<md-button ng-if="article.isMine" class="md-raised md-warn" ng-click="delArticle(article)">
+			<ng-md-icon icon="delete"></ng-md-icon>
+		</md-button>
+		<md-button class="md-raised md-primary" ng-click="challengerList(article._id)">Challengers</md-button>
+	</div>
+	<md-card class="md-card md-whiteframe-15dp">
 		<img ng-src="{{article.imgPath}}">
-		<div>
+		<md-card-content>
+			<p layout-align="center left">
 			{{article.content}}
-		</div>
+			</p>
+		</md-card-content>
+	</md-card>
 
-		<md-divider></md-divider>
-		<md-divider></md-divider>
+	<div class="replys">
 		<md-list>
 			<md-subheader class="md-no-sticky">{{replysCount}} Replys...</md-subheader>
 			<md-list-item class="md-3-line" ng-repeat="reply in replys">
@@ -34,15 +46,14 @@
 			</md-list-item>
 			<md-divider ng-if="!$last"></md-divider>
 		</md-list>
-			<md-divider></md-divider>
-			<p class="input-group">
-				<input type="text" class="form-control" placeholder="reply..." ng-model="reply.content" />
-				<span class="input-group-btn">
-					<button type="submit" class="btn btn-primary" ng-click="replyPost()">
-						<ng-md-icon icon="send" style="fill:#ffffff"></ng-md-icon>
-					</button>
-				</span>
-			</p>
-		</form>
-	</md-content>
+		<md-divider></md-divider>
+			<input type="text" class="form-control" placeholder="reply..." ng-model="reply.content" />
+			<span class="input-group-btn">
+				<md-button class="md-raised md-primary" ng-click="replyPost()" aria-label="Post">
+					<ng-md-icon icon="send" style="fill:#ffffff"></ng-md-icon>
+				</md-button>
+			</span>
+	</div>
+
+	<md-button class="md-raised md-primary challenge-button" ng-click="challenge(article._id)">Challenge</md-button>
 </div>

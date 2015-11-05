@@ -29,20 +29,17 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <section class="section-nav">
-      <div ng-include="'components/navbar/navbar.html'"></div>
-    </section>
-    <div ng-include="'components/sidenav/sidenav.html'"></div>
-    <div ui-view=""></div>
-    <section class="section-view">
+    <div ui-view="account"></div>
+    
     <div ui-view="list"></div>
     <div ui-view="create"></div>
     <div ui-view="articleViews"></div>
+    <div ui-view="articleEdit"></div>
     
     <div ui-view="challengeViews"></div>
     <div ui-view="challengeCreate"></div>
     <div ui-view="challengeEdit"></div>
-    </section>
+    
     
     
     <!-- <div ng-include="'components/navbar/footer.html'"></div> -->
@@ -101,6 +98,7 @@
           <script src="app/article/edit/edit.controller.js"></script>
           <script src="app/article/list/list.controller.js"></script>
           <script src="app/article/view/view.controller.js"></script>
+          <script src="app/challenge/chainview.controller.js"></script>
           <script src="app/challenge/challenge.js"></script>
           <script src="app/challenge/create/challenge.create.controller.js"></script>
           <script src="app/challenge/edit/edit.controller.js"></script>
@@ -114,6 +112,7 @@
           <script src="components/mongoose-error/mongoose-error.directive.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <script src="components/socket/socket.service.js"></script>
+          <script src="directives/back/back.directive.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
 </body>

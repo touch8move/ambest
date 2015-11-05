@@ -87,7 +87,7 @@ angular.module('ambestApp', [
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
-          event.preventDefault();
+          // event.preventDefault();
           $location.path('/login');
         }
       });

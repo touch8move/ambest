@@ -1,3 +1,4 @@
+/*
 [ui-view] {
     -webkit-transition: -webkit-transform .7s ease-in-out;
     -moz-transition: -moz-transform .7s ease-in-out;
@@ -13,24 +14,26 @@
 }
 
 [ui-view].ng-enter.ng-enter-active, [ui-view].ng-leave {
-    position: absolute;
     -webkit-transform: translateX(0);
     transform: translateX(0);
 }
 
 [ui-view].ng-leave.ng-leave-active {
+    opacity 0
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
 }
 
-.section-view {
-    position absolute
-    top 70px
+*/
+.header-fixed {
+    z-index 100
+    position fixed
+    top 0px
+    width 100%
+    height 56px
 }
 
-.section-nav {
-    position absolute
-    height auto
-    width 100%
-    top 0px
+.content {
+    position relative
+    top 60px
 }
