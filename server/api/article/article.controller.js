@@ -14,7 +14,7 @@ var publicFilePath = path.resolve(_PUBLICPATH)
 
 // Get list of articles
 exports.index = function(req, res) {
-  Article.find(function (err, articles) {
+  Article.find().sort('-createdDate').exec(function (err, articles) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(articles);
   });

@@ -18,6 +18,13 @@ exports.isLike = function(req, res) {
   });
 };
 
+exports.count = function (req, res) {
+  Like.count({articleId:req.params.id}, function (err, count) {
+    if(err) { return handleError(res, err) }
+      return res.status(200).json({count: count})
+  })
+}
+
 // Get a single like
 exports.show = function (req, res) {
   Like.find({challengeId:req.params.id}, function (err, like) {

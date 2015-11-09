@@ -1,17 +1,18 @@
 'use strict';
 
 angular.module('ambestApp')
-	.controller('ArticleListCtrl', function ($scope, $location, $mdUtil, $mdSidenav, Articles, Auth) {
+	.controller('ArticleListCtrl', function ($scope, $location, $mdUtil, $mdSidenav, Articles, Auth, CardInfos) {
 		$scope.isCollapsed = true
 		$scope.isLoggedIn = Auth.isLoggedIn
 		$scope.isAdmin = Auth.isAdmin
 		$scope.getCurrentUser = Auth.getCurrentUser
-		
-		$scope.articles = null
-		Articles.query(function(list) {
-			$scope.articles = list
+
+		$scope.cardInfos = null
+
+		CardInfos.query(function(cdinfos) {
+			$scope.cardInfos = cdinfos
 		}, function (err) {
-			console.err(err)
+			console.error(err)
 		})
 
 		$scope.go = function (id) {

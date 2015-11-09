@@ -42,7 +42,7 @@ angular.module('ambestApp')
 	}
 
 	$scope.thumbup = function (challenge) {
-		var _like = {challengeId:challenge._id}
+		var _like = {articleId:challenge.articleId, challengeId:challenge._id}
 		Likes.save(_like, function (like) {
 			challenge.like.push(like)
 			// console.log(like)

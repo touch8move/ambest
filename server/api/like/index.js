@@ -7,6 +7,7 @@ var router = express.Router()
 
 router.get('/:id', controller.show)
 router.get('/:id/isLike', auth.getUser(), controller.isLike)
+router.get('/:id/count', controller.count)
 router.post('/', auth.isAuthenticated(), controller.create)
 router.put('/:id', auth.isAuthenticated(), controller.update)
 router.patch('/:id', auth.isAuthenticated(), controller.update)
