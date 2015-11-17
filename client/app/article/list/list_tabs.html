@@ -1,0 +1,32 @@
+<div layout="column" ng-cloak>
+	<md-toolbar class="header-fixed">
+		<div class="md-toolbar-tools">
+			<md-button class="md-icon-button" aria-label="Settings" href="/#/">
+				<ng-md-icon icon="home" style="fill:#ffffff"></ng-md-icon>
+			</md-button>
+			<h2>
+				List
+			</h2>
+			<span flex=""></span>
+			<md-button class="md-icon-button" aria-label="Settings" ng-click="create()">
+				<ng-md-icon icon="create" style="fill:#ffffff"></ng-md-icon>
+			</md-button>
+			<md-button class="md-icon-button" aria-label="More" ng-click="toggleRight()">
+				<ng-md-icon icon="person" style="fill:#ffffff"></ng-md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-content flex>
+		<md-tabs class="md-primary" md-no-ink-bar="true" md-dynamic-height md-selected="selectedIndex">
+			<md-tab label="hot" md-on-select="loadHot()">
+				<div ng-include="'app/article/list/list_hot.html'"></div>
+			</md-tab>
+			<md-tab label="fresh" md-on-select="loadFresh()">
+				<div ng-include="'app/article/list/list.html'"></div>
+			</md-tab>
+			<md-tab label="favorite" md-on-select="loadFavorite()">
+				<div ng-include="'app/article/list/list_favorite.html'"></div>
+			</md-tab>
+		</md-tabs>
+	</md-content>
+</div>

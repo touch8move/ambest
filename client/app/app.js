@@ -82,7 +82,7 @@ angular.module('ambestApp', [
     })
   })
   .factory('CardInfos', function ($resource) {
-    return $resource('/api/cardInfos')
+    return $resource('/api/cardInfos/:type')
   })
   
   .run(function ($rootScope, $location, Auth) {

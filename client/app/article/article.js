@@ -26,7 +26,7 @@ angular.module('ambestApp')
 				url: '/',
 				views:{
 					'list':{
-						templateUrl: 'app/article/list/list.html',
+						templateUrl: 'app/article/list/list_tabs.html',
 						controller: 'ArticleListCtrl'
 					}
 				}
