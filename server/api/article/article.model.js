@@ -7,7 +7,14 @@ var ArticleSchema = new Schema({
 	title: String,
 	imgPath: String,
 	content: String,
-	
+	challenge: [{
+		type: Schema.ObjectId,
+		ref: 'Challenge'
+	}],
+	reply: [{
+		type: Schema.ObjectId,
+		ref: 'Reply'
+	}],
 	createdBy: {
 		type: Schema.ObjectId,
 		ref: 'User'
