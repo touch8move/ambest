@@ -8,12 +8,35 @@ angular.module('ambestApp')
 		$scope.getCurrentUser = Auth.getCurrentUser
 
 		$scope.cardInfos = null
+		$scope.cardInfosHot = null
+		$scope.cardInfosFavorite = null
+		$scope.selectedIndex = 1
 
-		CardInfos.query(function(cdinfos) {
-			$scope.cardInfos = cdinfos
-		}, function (err) {
-			console.error(err)
-		})
+		$scope.loadFresh = function () {
+			CardInfos.query(function (cdinfos) {
+				$scope.cardInfos = cdinfos
+			}, function (err) {
+				console.error(err)
+			})
+		}
+
+		$scope.loadHot = function () {
+			CardInfos.query({type:'hot'}, function (cdinfos) {
+				$scope.cardInfosHot = cdinfos
+			}, function (err) {
+				console.error(err)
+			})
+		}
+
+		$scope.loadFavorite = function () {
+			CardInfos.query({type:'fav'}, function (cdinfos) {
+				$scope.cardInfosFavorite = cdinfos
+			}, function (err) {
+				console.error(err)
+			})
+		}
+
+
 
 		$scope.go = function (id) {
 			$location.path('/article/view/'+id)
