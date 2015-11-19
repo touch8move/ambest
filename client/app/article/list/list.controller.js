@@ -18,9 +18,15 @@ angular.module('ambestApp')
 		$scope.go = function (id) {
 			$location.path('/article/view/'+id)
 		}
-		$scope.create = function () {
-			$location.path('/article/create')
-		}
+		// $scope.create = function () {
+		// 	// $location.path('/article/create')
+		// 	var content = angular.element(document.getElementsByTagName('md-content'))
+		// 	content.css('overflow', 'hidden')
+		// 	content.css('position', 'fixed')
+		// 	angular.element(document.body).append(
+		// 		"<div style='width:100%;height:960px;z-index:100;position:fixed;background:#ffffff;top:0px'>abcdefg</div>"
+		// 		)
+		// }
 
 		
 

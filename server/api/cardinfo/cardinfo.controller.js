@@ -13,7 +13,7 @@ exports.index = function(req, res) {
 	
 	Article.find().sort('-createdDate').exec(function (err, articles) {
 		if(err) { return handleError(res, err); }
-		console.log(articles)
+		// console.log(articles)
 		each(articles, function (article, cb) {
 			var cdInfo = {
 				article: article,

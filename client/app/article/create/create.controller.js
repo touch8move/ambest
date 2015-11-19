@@ -13,6 +13,7 @@ angular.module('ambestApp')
 		if($scope.auth.isLoggedIn()) {
 			Articles.save($scope.article, function (article) {
 				console.log(article)
+				$scope.$emit('div_close')
 				var confirm = $mdDialog.confirm()
 					.title('Confirm')
 					.content('Do you wanna challenge ?')

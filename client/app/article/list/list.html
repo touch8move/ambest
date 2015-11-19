@@ -8,8 +8,10 @@
 				List
 			</h2>
 			<span flex=""></span>
-			<md-button class="md-icon-button" aria-label="Settings" ng-click="create()">
-				<ng-md-icon icon="create" style="fill:#ffffff"></ng-md-icon>
+			<md-button class="md-icon-button" aria-label="create">
+				<call-new-div title="Create" include-url="app/article/create/create.html">
+					<ng-md-icon icon="create" style="fill:#ffffff"></ng-md-icon>
+				</call-new-div>
 			</md-button>
 			<md-button class="md-icon-button" aria-label="More" ng-click="toggleRight()">
 				<ng-md-icon icon="person" style="fill:#ffffff"></ng-md-icon>
@@ -18,7 +20,8 @@
 	</md-toolbar>
 </header>
 
-<div class="content" layout="column" layout-align="center center">
+
+	<md-content class="contest-list">
 	<md-card class="md-card md-whiteframe-15dp" ng-repeat="card in cardInfos" ng-click="go(card.article._id)">
 		<div class="view-card-imagearea">
 			<div class="view-card-title"> 
@@ -48,4 +51,5 @@
 			</div>
 		</md-card-content>
 	</md-card>
-</div>
+	</md-content>
+
