@@ -1,31 +1,20 @@
-<div layout="column" layout-align="center center">
-	<md-card class="md-card md-whiteframe-15dp" ng-repeat="card in cardInfosHot" ng-click="go(card.article._id)">
-		<div class="view-card-imagearea">
-			<div class="view-card-title"> 
-				<h2 class="md-title view-card-title-latter">{{card.article.title}}</h2> 
+hot
+<md-card class="md-card ambest-card md-whiteframe-15dp" ng-repeat="card in cardInfos" ng-click="go(card.article._id)">
+	<div class="view-card-image">
+		<img ng-src="{{card.article.imgPath}}" class="md-card-image">
+	</div>
+	<md-card-content>
+		<div class="ambest-card-info" layout="row" layout-wrap layout-align="center center">
+			<div flex><h4>{{card.article.title}}</h4></div>
+			<!-- <div flex="10">
+				<ng-md-icon icon="thumb_up" class="icon-color-gray"></ng-md-icon> {{card.likesCnt}}
 			</div>
-			<div class="view-card-image">
-				<img ng-src="{{card.article.imgPath}}" class="md-card-image">
+			<div flex="10">
+				<ng-md-icon icon="messenger" class="icon-color-gray"></ng-md-icon> {{card.replysCnt}}
 			</div>
+			<div flex="10">
+				<ng-md-icon icon="people" class="icon-color-gray"></ng-md-icon> {{card.challengesCnt}}
+			</div> -->
 		</div>
-		<md-card-content>
-			<!-- <h2 class="md-title">{{card.article.title}}</h2> -->
-			<p>
-				{{card.article.content}} 
-
-			</p>
-
-			<div layout="row">
-				<p flex>
-					{{card.article.createdDate | date:'yyyy-MM-dd HH:mm:ss'}}
-				</p>
-				<p flex></p>
-				<p flex>
-					<ng-md-icon icon="thumb_up" class="icon-color-gray"></ng-md-icon> {{card.likesCnt}}
-					<ng-md-icon icon="messenger" class="icon-color-gray"></ng-md-icon> {{card.replysCnt}}
-					<ng-md-icon icon="people" class="icon-color-gray"></ng-md-icon> {{card.challengesCnt}}
-				</p>
-			</div>
-		</md-card-content>
-	</md-card>
-</div>
+	</md-card-content>
+</md-card>

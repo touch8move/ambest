@@ -1,25 +1,27 @@
-<header scroll-y-offset-element class="header header-fixed">
-	<md-toolbar>
-		<div class="md-toolbar-tools">
-			<md-button class="md-icon-button" aria-label="back" back>
-				<ng-md-icon icon="clear" style="fill:#ffffff"></ng-md-icon>
-			</md-button>
-			Contest
-			<span flex=""></span>
-		</div>
-	</md-toolbar>
-</header>
-<div class="content" layout="column" layout-align="center center" ng-clock>
+<md-toolbar class="ambest-title">
 	<div class="md-toolbar-tools">
-		<h2>{{article.title}}</h2>
+		<md-button class="md-icon-button" aria-label="back" back>
+			<ng-md-icon icon="clear" style="fill:#ffffff"></ng-md-icon>
+		</md-button>
+		<h2>
+			
+		</h2>
+		<span flex=""></span>
+	</div>
+</md-toolbar>
+
+<md-content class="ambest-contents">
+	<div layout="row" layout-wrap layout-align="center center">
+		<h4 flex="70">{{article.title}}</h4>
 		<span flex></span>
+		<div flex>
 		<md-button ng-if="article.isMine" class="md-raised md-warn" ng-click="editArticle(article)">
 			<ng-md-icon icon="create"></ng-md-icon>
-		</md-button>
+		</md-button></div>
+		<div flex>
 		<md-button ng-if="article.isMine" class="md-raised md-warn" ng-click="delArticle(article)">
 			<ng-md-icon icon="delete"></ng-md-icon>
-		</md-button>
-		<md-button class="md-raised md-primary" ng-click="challengerList(article._id)">Challengers</md-button>
+		</md-button></div>
 	</div>
 	<md-card class="md-card md-whiteframe-15dp">
 		<img ng-src="{{article.imgPath}}">
@@ -30,15 +32,15 @@
 		</md-card-content>
 	</md-card>
 
-	<div class="replys">
+<!-- 	<div class="replys">
 		<md-list>
 			<md-subheader class="md-no-sticky">{{replysCount}} Replys...</md-subheader>
 			<md-list-item class="md-3-line" ng-repeat="reply in replys">
-				<!-- <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" /> -->
+				<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
 				<div class="md-list-item-text" layout="column">
 					<h3>{{ reply.createdBy.name }}</h3>
 					<h4>{{ reply.content }}</h4>
-					<!-- <p>{{ item.notes }}</p> -->
+					<p>{{ item.notes }}</p>
 				</div>
 				<md-button ng-click="delReply(reply)">
 					<ng-md-icon icon="clear" style="fill:#000000"></ng-md-icon>
@@ -53,7 +55,31 @@
 					<ng-md-icon icon="send" style="fill:#ffffff"></ng-md-icon>
 				</md-button>
 			</span>
-	</div>
+	</div> -->
 
-	<md-button class="md-raised md-primary challenge-button" ng-click="challenge(article._id)">Challenge</md-button>
-</div>
+	<!-- <md-button class="md-raised md-primary challenge-button" ng-click="challenge(article._id)">Challenge</md-button> -->
+					<md-button ng-if="!challenge.isLike" class="md-raised md-primary" aria-label="thumbup" ng-click="thumbup(challenge)">
+						<ng-md-icon icon="thumb_up"></ng-md-icon>
+					</md-button >
+					<md-button ng-if="challenge.isMine" class="md-raised md-warn" aria-label="edit" ng-click="editChallenge(challenge)">
+						<ng-md-icon icon="create"></ng-md-icon>
+					</md-button>
+					<md-button ng-if="challenge.isMine" class="md-raised md-warn" aria-label="delete" ng-click="delChallenge(challenge)">
+						<ng-md-icon icon="delete"></ng-md-icon>
+					</md-button>
+					<md-button ng-if="challenge.isLike" class="md-raised md-primary" aria-label="cancelthumbup" ng-click="cancelthumbup(challenge)">
+						<ng-md-icon icon="thumb_up" style="fill:red"></ng-md-icon>
+					</md-button>
+					{{challenge.likeCount}}
+					<md-card class="md-card" ng-repeat="item in challenge.challengeItems">
+						<div>
+							<img ng-src="{{item.imgPath}}" class="md-card-image">
+						</div>
+						<p>
+							{{item.content}}
+						</p>
+					</md-card>
+				</md-tab-body>
+			</md-tab>
+		</md-tabs>
+</md-content>

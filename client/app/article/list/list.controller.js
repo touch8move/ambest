@@ -1,62 +1,20 @@
 'use strict';
 
 angular.module('ambestApp')
-	.controller('ArticleListCtrl', function ($scope, $location, $mdUtil, $mdSidenav, Articles, Auth, CardInfos) {
+	.controller('ArticleListCtrl', function ($scope, $location, $mdUtil, $mdSidenav, Articles, Auth) {
 		$scope.isCollapsed = true
 		$scope.isLoggedIn = Auth.isLoggedIn
 		$scope.isAdmin = Auth.isAdmin
 		$scope.getCurrentUser = Auth.getCurrentUser
 
-		$scope.cardInfos = null
-		$scope.cardInfosHot = null
-		$scope.cardInfosFavorite = null
-		$scope.selectedIndex = 1
+		$scope.selectedIndex = 0
 
-		$scope.loadFresh = function () {
-			CardInfos.query(function (cdinfos) {
-				$scope.cardInfos = cdinfos
-			}, function (err) {
-				console.error(err)
-			})
+		$scope.create = function () {
 		}
-
-		$scope.loadHot = function () {
-			CardInfos.query({type:'hot'}, function (cdinfos) {
-				$scope.cardInfosHot = cdinfos
-			}, function (err) {
-				console.error(err)
-			})
-		}
-
-		$scope.loadFavorite = function () {
-			CardInfos.query({type:'fav'}, function (cdinfos) {
-				$scope.cardInfosFavorite = cdinfos
-			}, function (err) {
-				console.error(err)
-			})
-		}
-
-
-
-		$scope.go = function (id) {
-			$location.path('/article/view/'+id)
-		}
-		// $scope.create = function () {
-		// 	// $location.path('/article/create')
-		// 	var content = angular.element(document.getElementsByTagName('md-content'))
-		// 	content.css('overflow', 'hidden')
-		// 	content.css('position', 'fixed')
-		// 	angular.element(document.body).append(
-		// 		"<div style='width:100%;height:960px;z-index:100;position:fixed;background:#ffffff;top:0px'>abcdefg</div>"
-		// 		)
-		// }
-
-		
 
 		$scope.logout = function() {
 			Auth.logout()
-			$mdSidenav('right').close()
-			$location.path('/login')
+			$scope.$emit('div_close')
 		}
 		$scope.signup = function() {
 	      	$mdSidenav('right').close()
@@ -81,4 +39,44 @@ angular.module('ambestApp')
 					},200)
 			return debounceFn
 		}
-	});
+	})
+	.controller('ArticleListHotCtrl', function ($scope, $location, CardInfos) {
+
+		$scope.cardInfos = null
+		CardInfos.query({type:'hot'}, function (cdinfos) {
+			$scope.cardInfos = cdinfos
+		}, function (err) {
+			console.error(err)
+		})
+
+		$scope.go = function (id) {
+			$location.path('/article/view/'+id)
+		}
+	})
+	.controller('ArticleListFreshCtrl', function ($scope, $location, CardInfos) {
+
+		$scope.cardInfos = null
+
+		CardInfos.query(function (cdinfos) {
+			$scope.cardInfos = cdinfos
+		}, function (err) {
+			console.error(err)
+		})
+
+		$scope.go = function (id) {
+			$location.path('/article/view/'+id)
+		}
+	})
+	.controller('ArticleListFavCtrl', function ($scope, $location, CardInfos) {
+
+		$scope.cardInfos = null
+		CardInfos.query({type:'fav'}, function (cdinfos) {
+			$scope.cardInfos = cdinfos
+		}, function (err) {
+			console.error(err)
+		})
+
+		$scope.go = function (id) {
+			$location.path('/article/view/'+id)
+		}
+	})

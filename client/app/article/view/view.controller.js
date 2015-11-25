@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ambestApp')
-	.controller('ArticleViewCtrl', function ($scope, Articles, $location, $stateParams, Replys, Auth) {
+	.controller('ArticleViewCtrl', function ($scope, Articles, $location, Replys, Auth, $stateParams) {
 		$scope.article = null
 		Articles.get({id:$stateParams.id}, function (article) {
 			if (article.createdBy == Auth.getCurrentUser()._id) {

@@ -8,12 +8,12 @@ angular.module('ambestApp')
 		content: "",
 		imgPath: ""
 	}
-	
+
 	$scope.create = function() {
 		if($scope.auth.isLoggedIn()) {
 			Articles.save($scope.article, function (article) {
-				console.log(article)
-				$scope.$emit('div_close')
+				// console.log(article)
+				// $scope.$emit('dh-close')
 				var confirm = $mdDialog.confirm()
 					.title('Confirm')
 					.content('Do you wanna challenge ?')

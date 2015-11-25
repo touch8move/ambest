@@ -1,32 +1,39 @@
-<div layout="column" ng-cloak>
-	<md-toolbar class="header-fixed">
-		<div class="md-toolbar-tools">
-			<md-button class="md-icon-button" aria-label="Settings" href="/#/">
-				<ng-md-icon icon="home" style="fill:#ffffff"></ng-md-icon>
-			</md-button>
-			<h2>
-				List
-			</h2>
-			<span flex=""></span>
-			<md-button class="md-icon-button" aria-label="Settings" ng-click="create()">
+<md-toolbar class="ambest-title">
+	<div class="md-toolbar-tools">
+		<md-button class="md-icon-button" aria-label="Settings" href="/#/">
+			<ng-md-icon icon="home" style="fill:#ffffff"></ng-md-icon>
+		</md-button>
+		<h2>
+			Contests
+		</h2>
+		<span flex=""></span>
+		<md-button class="md-icon-button" aria-label="Settings" href="#/article/create">
+			<!-- <call-new-div title="Create" include-url="app/article/create/create.html"> -->
 				<ng-md-icon icon="create" style="fill:#ffffff"></ng-md-icon>
-			</md-button>
-			<md-button class="md-icon-button" aria-label="More" ng-click="toggleRight()">
-				<ng-md-icon icon="person" style="fill:#ffffff"></ng-md-icon>
-			</md-button>
-		</div>
-	</md-toolbar>
-	<md-content flex>
-		<md-tabs class="md-primary" md-no-ink-bar="true" md-dynamic-height md-selected="selectedIndex">
-			<md-tab label="hot" md-on-select="loadHot()">
-				<div ng-include="'app/article/list/list_hot.html'"></div>
-			</md-tab>
-			<md-tab label="fresh" md-on-select="loadFresh()">
-				<div ng-include="'app/article/list/list.html'"></div>
-			</md-tab>
-			<md-tab label="favorite" md-on-select="loadFavorite()">
-				<div ng-include="'app/article/list/list_favorite.html'"></div>
-			</md-tab>
-		</md-tabs>
-	</md-content>
-</div>
+			<!-- </call-new-div> -->
+		</md-button>
+		<md-button class="md-icon-button" aria-label="More">
+			<p ng-if="!isLoggedIn()" ng-click="login()">
+				<ng-md-icon icon="login" style="fill:#ffffff"></ng-md-icon>
+			</p>
+			<p ng-if="isLoggedIn()" ng-click="logout()">
+				<ng-md-icon icon="logout" style="fill:#ffffff"></ng-md-icon>
+			</p>
+		</md-button>
+	</div>
+</md-toolbar>
+<md-tabs class="md-primary ambest-tabs" md-no-ink-bar="true" md-dynamic-height md-selected="selectedIndex">
+	<md-tab label="hot" ui-sref="tabs.articleListHot" md-on-select="loadHot()">
+		<!-- <div ng-include="'app/article/list/list_hot.html'"></div> -->
+		<!-- <div ui-view="hot"></div> -->
+	</md-tab>
+	<md-tab label="fresh" ui-sref="tabs.articleListFresh" md-on-select="loadFresh()">
+		<!-- <div ng-include="'app/article/list/list.html'"></div> -->
+		<!-- <div ui-view="fresh"></div> -->
+	</md-tab>
+	<md-tab label="favorite" ui-sref="tabs.articleListFav" md-on-select="loadFavorite()">
+		<!-- <div ng-include="'app/article/list/list_favorite.html'"></div> -->
+		<!-- <div ui-view="favorite"></div> -->
+	</md-tab>
+</md-tabs>
+<div ui-view="article" class="ambest-contents tabs" autoscroll="false"></div>

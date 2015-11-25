@@ -5,30 +5,30 @@ angular.module('ambestApp')
 		$stateProvider
 			.state('login', {
 				url: '/login',
-				views:{
-					'account':{
+				// views:{
+					// 'account':{
 						templateUrl: 'app/account/login/login.html',
 						controller: 'LoginCtrl'
-					}
-				}
+					// }
+				// }
 			})
 			.state('signup', {
 				url: '/signup',
-				views:{
-					'account':{
+				// views:{
+					// 'account':{
 						templateUrl: 'app/account/signup/signup.html',
 						controller: 'SignupCtrl'
-					}
-				}
+					// }
+				// }
 			})
 			.state('settings', {
 				url: '/settings',
 				authenticate: true,
-				views:{
-					'account':{
+				// views:{
+					// 'account':{
 						templateUrl: 'app/account/settings/settings.html',
 						controller: 'SettingsCtrl',
-					}
-				}
+					// }
+				// }
 			});
 	});

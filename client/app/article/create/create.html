@@ -1,35 +1,38 @@
-<div ng-controller="ArticleCreateCtrl">
+<md-toolbar class="ambest-title">
+	<div class="md-toolbar-tools">
+		<md-button class="md-icon-button" aria-label="back" back>
+			<ng-md-icon icon="clear" style="fill:#ffffff"></ng-md-icon>
+		</md-button>
+		<h2>
+			Create
+		</h2>
+		<span flex=""></span>
+	</div>
+</md-toolbar>
 
-<div layout="column" layout-align="center center" ng-cloak>
+<md-content class="ambest-contents">
+	<md-input-container>
+		<label>Title</label>
+		<input type="text" ng-model="article.title" required md-maxlength="100" minlength="5" aria-label="Input Title">
+	</md-input-container>
+	<div
+		flow-init
+		flow-files-submitted="$flow.upload()" 
+		flow-file-success="getTmpFileName($file, $message)">
+		<md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
+			<ng-md-icon icon="photo" style="fill:#ffffff"></ng-md-icon>
+		</md-button>
+		<div>
+			<img flow-img="$flow.files[0]" class="upload-image"/>
+		</div>
 		
-	<md-content class="md-padding">
-		<form name="createForm" role="form">    
-			<md-input-container>
-				<label>Title</label>
-				<input type="text" ng-model="article.title" required md-maxlength="100" minlength="5" aria-label="Input Title">
-			</md-input-container>
-			<div
-				flow-init
-				flow-files-submitted="$flow.upload()" 
-				flow-file-success="getTmpFileName($file, $message)">
-				<md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
-					<ng-md-icon icon="photo" style="fill:#ffffff"></ng-md-icon>
-				</md-button>
-				<div>
-					<img flow-img="$flow.files[0]" class="upload-image"/>
-				</div>
-				
-				<md-input-container>
-					<label>Content</label>
-					<textarea ng-model="article.content"></textarea>
-				</md-input-container>
-			</div>
+		<md-input-container>
+			<label>Content</label>
+			<textarea ng-model="article.content"></textarea>
+		</md-input-container>
+	</div>
 
-			<md-button aria-label="post" class="md-raised md-mini md-primary" ng-click="create()">
-				<ng-md-icon icon="save" style="fill:#ffffff"></ng-md-icon>
-			</md-button>
-		</form>
-	</md-content>
-
-</div>
-</div>
+	<md-button aria-label="post" class="md-raised md-mini md-primary" ng-click="create()">
+		<ng-md-icon icon="save" style="fill:#ffffff"></ng-md-icon>
+	</md-button>
+</md-content>

@@ -48,8 +48,40 @@
 @import 'challenge/edit/edit.styl';
 @import 'index.styl';
 @import 'main/main.styl';
+@import 'layer/dhlayer.styl';
 @import 'modal/modal.styl';
 @import 'navbar/navbar.styl';
-@import 'newdiv/newdiv.styl';
 // endinjector
 
+
+.icon-color-gray
+  fill #aaaaaa
+
+.article-create
+  z-index 1000
+
+.ambest-title
+  z-index 200
+  top 0px
+  position fixed
+  height 56px
+  width 100%
+
+.ambest-tabs
+  z-index 100
+  position fixed
+  top 56px
+  height 44px
+  width 100%
+
+.ambest-contents
+  position relative
+  z-index 50
+  top 56px
+  min-height 600px
+  padding-right 15px
+  padding-left 15px
+  margin-right auto
+  margin-left auto
+.ambest-contents.tabs
+  top 100px
