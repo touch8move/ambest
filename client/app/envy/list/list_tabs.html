@@ -1,0 +1,26 @@
+<md-toolbar class="ambest-title">
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Home" href="/#/">
+      <ng-md-icon icon="home" style="fill:#ffffff"></ng-md-icon>
+    </md-button>
+    <h2>
+      Amthebest
+    </h2>
+    <span flex=""></span>
+    <md-button class="md-icon-button" aria-label="Create" href="#/article/create">
+      <ng-md-icon icon="create" style="fill:#ffffff"></ng-md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="More">
+      <p ng-if="!isLoggedIn()" ng-click="login()">
+        <ng-md-icon icon="login" style="fill:#ffffff"></ng-md-icon>
+      </p>
+      <p ng-if="isLoggedIn()" ng-click="logout()">
+        <ng-md-icon icon="logout" style="fill:#ffffff"></ng-md-icon>
+      </p>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-tabs class="md-primary ambest-tabs" md-no-ink-bar="true" md-dynamic-height md-selected="selectedIndex">
+  <md-tab label="자랑하기" ui-sref="tabs.envyList"></md-tab>
+</md-tabs>
+<div ui-view="article" class="ambest-contents tabs" autoscroll="false"></div>
