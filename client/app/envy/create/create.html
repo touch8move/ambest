@@ -1,3 +1,41 @@
-<div class="col-md-12">
-This is the create view.
-</div>
+<md-toolbar class="ambest-title">
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="back" back>
+      <ng-md-icon icon="clear" style="fill:#ffffff"></ng-md-icon>
+    </md-button>
+    <h2>
+      Create
+    </h2>
+    <span flex=""></span>
+  </div>
+</md-toolbar>
+
+<md-content class="ambest-contents">
+  <md-input-container>
+    <label>Title</label>
+    <input type="text" ng-model="article.title" required md-maxlength="100" minlength="5" aria-label="Input Title">
+  </md-input-container>
+
+  <md-card class="ambest-create-card" ng-repeat="item in envy.envyItems" 
+    flow-init="{query:{imgIndex:$index}}"
+    flow-files-submitted="$flow.upload()"
+    flow-file-success="getTmpFileName($file, $message, $index)">
+
+    <md-button aria-label="Photo" class="md-fab md-primary md-raised md-mini" flow-btn>
+      <ng-md-icon icon="photo" style="fill:#ffffff"></ng-md-icon>
+    </md-button>
+
+    <img flow-img="$flow.files[0]" class="ambest-upload-image"/>
+
+    <md-input-container>
+      <label>Content</label>
+     <textarea ng-model="item.content" md-maxlength="20"></textarea>
+    </md-input-container>
+  </md-card>
+  <md-button class="md-raised md-primary" ng-click="add()" aria-label="Add">
+    <ng-md-icon icon="add" aria-label="add"></ng-md-icon>
+  </md-button>
+  <md-button class="md-raised md-warn" ng-click="create()">
+    <ng-md-icon icon="done" aria-label="done"></ng-md-icon>
+  </md-button>
+</md-content>

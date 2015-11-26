@@ -21,7 +21,7 @@ angular.module('ambestApp', [
 		// 	}
 		// })
 		$urlRouterProvider
-			.otherwise('/tab/hot');
+			.otherwise('/envy/fresh');
 		// $stateProvider
 		// 	.state('Nav', {
 		// 		views:{
