@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/envy/envy.socket').register(socket);
   require('../api/like/like.socket').register(socket);
   require('../api/article/article.socket').register(socket);
   require('../api/reply/reply.socket').register(socket);
