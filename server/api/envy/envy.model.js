@@ -21,7 +21,7 @@ var EnvySchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  created_at:{ type: Date }
+  created_at:{ type: Date },
   updated_at:{ type: Date }
 });
 
