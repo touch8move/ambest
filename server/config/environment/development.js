@@ -8,5 +8,7 @@ module.exports = {
     uri: 'mongodb://localhost/ambest-dev'
   },
 
-  seedDB: true
+  seedDB: true,
+  imgDir: 'public/',
+  imgTmpDir: 'tmp/'
 };

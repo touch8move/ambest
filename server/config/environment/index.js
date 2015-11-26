@@ -43,6 +43,10 @@ var all = {
       }
     }
   },
+  
+  imgDir: 'public/',
+
+  imgTmpDir: 'tmp/',
 
   facebook: {
     clientID:     process.env.FACEBOOK_ID || 'id',
