@@ -91,6 +91,12 @@ angular.module('ambestApp', [
 	.factory('CardInfos', function ($resource) {
 		return $resource('/api/cardInfos/:type')
 	})
+
+	.factory('Envys', function ($resource) {
+		return $resource('/api/envys/:id', {
+			id: '@_id'
+		})
+	})
 	
 	.run(function ($rootScope, $location, Auth, $templateCache) {
 		// Redirect to login if route requires auth and you're not logged in
