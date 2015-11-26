@@ -1,7 +1,13 @@
 'use strict';
 
+var fs = require('fs')
+var path = require('path')
+var async = require('async')
+
 var _ = require('lodash');
 var Envy = require('./envy.model');
+var EnvyItem = require('./envyItem.model');
+var config = require('./../../config/environment');
 
 // Get list of envys
 exports.index = function(req, res) {
@@ -22,10 +28,30 @@ exports.show = function(req, res) {
 
 // Creates a new envy in the DB.
 exports.create = function(req, res) {
-  Envy.create(req.body, function(err, envy) {
-    if(err) { return handleError(res, err); }
-    return res.status(201).json(envy);
-  });
+  var _envy = req.body
+  var _envyItems = []
+  async.each(_envyItems, function (item, cb) {
+    EnvyItem.create(item, function (err, eItem) {
+      if(err) { return handleError(res, err)}
+      _envyItems.push(eItem)
+      fs.rename(
+        path.resolve(config.imgTmpDir, item.imgPath),
+        path.resolve(config.imgDir, item.imgPath),
+        function (err) {
+          console.error(err)
+          if (err) handleError(res, err)
+          cb()
+        })
+    })
+  }, function (err) {
+    if(err) return handleError(res, err)
+    console.log(_envy)
+    _envy.envyItems = _envyItems
+    Envy.create(_envy, function(err, envy) {
+      if(err) { return handleError(res, err); }
+      return res.status(201).json(envy);
+    });
+  })
 };
 
 // Updates an existing envy in the DB.

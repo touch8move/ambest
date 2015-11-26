@@ -13,7 +13,7 @@
 <md-content class="ambest-contents">
   <md-input-container>
     <label>Title</label>
-    <input type="text" ng-model="article.title" required md-maxlength="100" minlength="5" aria-label="Input Title">
+    <input type="text" ng-model="envy.title" required md-maxlength="100" minlength="5" aria-label="Input Title">
   </md-input-container>
 
   <md-card class="ambest-create-card" ng-repeat="item in envy.envyItems" 
@@ -26,10 +26,10 @@
     </md-button>
 
     <img flow-img="$flow.files[0]" class="ambest-upload-image"/>
-
+    {{item.imgPath}}
     <md-input-container>
       <label>Content</label>
-     <textarea ng-model="item.content" md-maxlength="20"></textarea>
+     <textarea ng-model="item.text" md-maxlength="20"></textarea>
     </md-input-container>
   </md-card>
   <md-button class="md-raised md-primary" ng-click="add()" aria-label="Add">
