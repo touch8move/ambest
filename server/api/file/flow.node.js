@@ -14,20 +14,23 @@ module.exports = flow = function(temporaryFolder) {
     } catch (e) {}
 
     function cleanIdentifier(identifier) {
-        // return identifier.replace(/[^0-9A-Za-z_-]/g, '');
-        return identifier.slice(identifier.indexOf('-')+1)
+        if (!identifier) {
+            identifier = ''
+        }
+        return identifier.replace(/[^0-9A-Za-z_-]/g, '');
     }
 
     function getChunkFilename(chunkNumber, identifier) {
         // Clean up the identifier
+        console.log('chunkNumber', chunkNumber)
         identifier = cleanIdentifier(identifier);
         // What would the file name be?
-        
-        return path.resolve($.temporaryFolder, './' + '_' + chunkNumber + '_' + identifier);
+        return path.resolve($.temporaryFolder, './flow-' + identifier + '.' + chunkNumber);
     }
 
     function validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename, fileSize) {
         // Clean up the identifier
+        // console.log('validateRequest')
         identifier = cleanIdentifier(identifier);
 
         // Check if the request is sane
@@ -70,18 +73,14 @@ module.exports = flow = function(temporaryFolder) {
         var totalSize = req.param('flowTotalSize', 0);
         var identifier = req.param('flowIdentifier', "");
         var filename = req.param('flowFilename', "");
-        var imgIndex = req.param('imgIndex', "");
 
         if (validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename) == 'valid') {
-            console.log('isValid')
-            var chunkFilename = getChunkFilename(chunkNumber, identifier+imgIndex);
-            console.log('chunkFilename', chunkFilename)
+            var chunkFilename = getChunkFilename(chunkNumber, identifier);
             fs.exists(chunkFilename, function(exists) {
-                var tmpFileName = path.basename(chunkFilename)
                 if (exists) {
-                    callback('found', tmpFileName, filename, identifier);
+                    callback('found', chunkFilename, filename, identifier);
                 } else {
-                    callback('not_found', tmpFileName, null, null);
+                    callback('not_found', null, null, null);
                 }
             });
         } else {
@@ -101,9 +100,9 @@ module.exports = flow = function(temporaryFolder) {
         var chunkNumber = fields['flowChunkNumber'];
         var chunkSize = fields['flowChunkSize'];
         var totalSize = fields['flowTotalSize'];
+        // console.log('post')
         var identifier = cleanIdentifier(fields['flowIdentifier']);
         var filename = fields['flowFilename'];
-        var imgIndex = fields['imgIndex']?fields['imgIndex']:"";
 
         if (!files[$.fileParameterName] || !files[$.fileParameterName].size) {
             callback('invalid_flow_request', null, null, null);
@@ -113,34 +112,39 @@ module.exports = flow = function(temporaryFolder) {
         var original_filename = files[$.fileParameterName]['originalFilename'];
         var validation = validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename, files[$.fileParameterName].size);
         if (validation == 'valid') {
-            // var chunkFilename = getChunkFilename(chunkNumber, identifier);
-            var chunkFilename = getChunkFilename(chunkNumber, identifier+imgIndex);
-            // Save the chunk (TODO: OVERWRITE)
-            fs.rename(files[$.fileParameterName].path, chunkFilename, function() {
+            var chunkFilename = getChunkFilename(chunkNumber, identifier);
 
-                // Do we have all the chunks?
-                var currentTestChunk = 1;
-                var numberOfChunks = Math.max(Math.floor(totalSize / (chunkSize * 1.0)), 1);
-                var testChunkExists = function() {
-                    fs.exists(getChunkFilename(currentTestChunk, identifier), function(exists) {
-                        var tmpFileName = path.basename(chunkFilename)
-                        if (exists) {
-                            currentTestChunk++;
-                            if (currentTestChunk > numberOfChunks) {
-                                callback('done', tmpFileName, original_filename, identifier);
-                            } else {
-                                // Recursion
-                                testChunkExists();
-                            }
-                        } else {
-                            callback('partly_done', tmpFileName, original_filename, identifier);
-                        }
-                    });
-                };
-                testChunkExists();
-            });
+            // Save the chunk (TODO: OVERWRITE)
+            fs.rename(files[$.fileParameterName].path, chunkFilename, function(){
+
+            // Do we have all the chunks?
+            var currentTestChunk = 1;
+            var numberOfChunks = Math.max(Math.floor(totalSize/(chunkSize*1.0)), 1);
+            var testChunkExists = function(){
+              fs.exists(getChunkFilename(currentTestChunk, identifier), function(exists){
+                if(exists){
+                  currentTestChunk++;
+                  if(currentTestChunk>numberOfChunks) {
+
+                    //Add currentTestChunk and numberOfChunks to the callback
+
+                    callback('done', filename, original_filename, identifier, currentTestChunk, numberOfChunks);
+                  } else {
+                    // Recursion
+                    testChunkExists();
+                  }
+                } else {
+
+                  //Add currentTestChunk and numberOfChunks to the callback
+
+                  callback('partly_done', filename, original_filename, identifier, currentTestChunk, numberOfChunks);
+                }
+              });
+            }
+            testChunkExists();
+          });
         } else {
-            callback(validation, filename, original_filename, identifier);
+          callback(validation, filename, original_filename, identifier);
         }
     };
 
@@ -153,37 +157,44 @@ module.exports = flow = function(temporaryFolder) {
     //   stream.on('data', function(data){...});
     //   stream.on('finish', function(){...});
     $.write = function(identifier, writableStream, options) {
-        options = options || {};
-        options.end = (typeof options['end'] == 'undefined' ? true : options['end']);
+      options = options || {};
+      options.end = (typeof options['end'] == 'undefined' ? true : options['end']);
 
-        // Iterate over each chunk
-        var pipeChunk = function(number) {
+      // Iterate over each chunk
+      var pipeChunk = function(number) {
 
-            var chunkFilename = getChunkFilename(number, identifier);
-            fs.exists(chunkFilename, function(exists) {
+          var chunkFilename = getChunkFilename(number, identifier);
+          fs.exists(chunkFilename, function(exists) {
 
-                if (exists) {
-                    // If the chunk with the current number exists,
-                    // then create a ReadStream from the file
-                    // and pipe it to the specified writableStream.
-                    var sourceStream = fs.createReadStream(chunkFilename);
-                    sourceStream.pipe(writableStream, {
-                        end: false
-                    });
-                    sourceStream.on('end', function() {
-                        // When the chunk is fully streamed,
-                        // jump to the next one
-                        pipeChunk(number + 1);
-                    });
-                } else {
-                    // When all the chunks have been piped, end the stream
-                    if (options.end) writableStream.end();
-                    if (options.onDone) options.onDone();
-                }
-            });
-        };
-        pipeChunk(1);
-    };
+              if (exists) {
+                  // If the chunk with the current number exists,
+                  // then create a ReadStream from the file
+                  // and pipe it to the specified writableStream.
+                  var sourceStream = fs.createReadStream(chunkFilename);
+                  sourceStream.pipe(writableStream, {
+                      end: false
+                  });
+                  sourceStream.on('end', function() {
+                      // When the chunk is fully streamed,
+                      // jump to the next one
+                      pipeChunk(number + 1);
+                  });
+              } else {
+                  // When all the chunks have been piped, end the stream
+                  if (options.end) {
+                          writableStream.end();
+                      }
+
+                  //Options.onDone contains flow.clean so here I'm deleting all the chunked files.
+
+                  if (options.onDone) {
+                      options.onDone(identifier);
+                  }
+              }
+          });
+      }
+      pipeChunk(1);
+    }
 
     $.clean = function(identifier, options) {
         options = options || {};
@@ -193,7 +204,7 @@ module.exports = flow = function(temporaryFolder) {
 
             var chunkFilename = getChunkFilename(number, identifier);
 
-            //console.log('removing pipeChunkRm ', number, 'chunkFilename', chunkFilename);
+            console.log('removing pipeChunkRm ', number, 'chunkFilename', chunkFilename);
             fs.exists(chunkFilename, function(exists) {
                 if (exists) {
 

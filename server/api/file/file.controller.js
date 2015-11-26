@@ -2,7 +2,7 @@
 process.env.TMPDIR = 'tmp';
 var fs = require('fs');
 var flow = require('./flow.node')('tmp');
-
+var config = require('./../../config/environment');
 var _ = require('lodash');
 var File = require('./file.model');
 
@@ -63,7 +63,7 @@ exports.destroy = function(req, res) {
 exports.upload = function (req, res, next) {
   console.log('exports.upload', req.body)
     flow.get(req, function(status, filename, original_filename, identifier) {
-      console.log('GET', status);
+      // console.log('GET', status);
       if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
         res.header("Access-Control-Allow-Origin", "*");
       }
@@ -79,12 +79,18 @@ exports.upload = function (req, res, next) {
 };
 
 exports.uploadPost = function (req, res) {
-  console.log('exports.uploadPost', req.body)
+  // console.log('exports.uploadPost', req.body)
   flow.post(req, function(status, filename, original_filename, identifier) {
-    console.log('POST', status, original_filename, identifier);
+    // console.log('POST', status, original_filename, identifier);
     if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
       res.header("Access-Control-Allow-Origin", "*");
     }
+
+    var stream = fs.createWriteStream(config.imgTmpDir + filename);
+    //EDIT: I removed options {end: true} because it isn't needed
+    //and added {onDone: flow.clean} to remove the chunks after writing
+    //the file.
+    flow.write(identifier, stream, { onDone: flow.clean });
     res.status(status).send(filename);
   });
 }
