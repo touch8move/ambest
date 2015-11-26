@@ -16,7 +16,8 @@ angular.module('ambestApp')
         .then( function() {
           // Logged in, redirect to home
           // $scope.$emit('div_close')
-          $location.path('/tab/hot')
+          // $location.path('/tab/hot')
+          $location.path('/')
         })
         .catch( function(err) {
           $scope.errors.other = err.message;
