@@ -1,0 +1,11 @@
+envy
+<md-card class="md-card ambest-card md-whiteframe-15dp" ng-repeat="card in envyInfo" ng-click="go(card.article._id)">
+  <div class="view-card-image">
+    <img ng-src="{{card.envy.imgPath}}" class="md-card-image">
+  </div>
+  <md-card-content>
+    <div class="ambest-card-info" layout="row" layout-wrap layout-align="center center">
+      <div flex><h4>{{card.article.title}}</h4></div>
+    </div>
+  </md-card-content>
+</md-card>
