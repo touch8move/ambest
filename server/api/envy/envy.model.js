@@ -11,11 +11,11 @@ var EnvySchema = new Schema({
   }],
   replys: [{
     type: Schema.ObjectId,
-    ref: 'reply'
+    ref: 'Ereply'
   }],
   likes: [{
     type: Schema.ObjectId,
-    ref: 'like'
+    ref: 'Elike'
   }],
   createdBy: {
     type: Schema.ObjectId,
