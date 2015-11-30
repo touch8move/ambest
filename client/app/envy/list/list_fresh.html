@@ -1,0 +1,20 @@
+fresh
+<md-card class="md-card md-whiteframe-15dp" ng-repeat="envy in envyInfo" ng-click="go(envy._id)">
+		<div class="view-card-image">
+			<img ng-src="{{envy.envyItems[0].imgPath}}" class="md-card-image">
+		</div>
+	<md-card-content>
+		<div class="ambest-card-info" layout="row" layout-wrap layout-align="center center">
+			<div flex><h4>{{envy.title}}</h4></div>
+			<!-- <div flex="10">
+				<ng-md-icon icon="thumb_up" class="icon-color-gray"></ng-md-icon> {{card.likesCnt}}
+			</div>
+			<div flex="10">
+				<ng-md-icon icon="messenger" class="icon-color-gray"></ng-md-icon> {{card.replysCnt}}
+			</div>
+			<div flex="10">
+				<ng-md-icon icon="people" class="icon-color-gray"></ng-md-icon> {{card.challengesCnt}}
+			</div> -->
+		</div>
+	</md-card-content>
+</md-card>
