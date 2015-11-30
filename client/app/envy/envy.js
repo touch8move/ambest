@@ -11,7 +11,7 @@ angular.module('ambestApp')
       })
       .state('envylist.fresh', {
         url: '/fresh',
-        view: {
+        views: {
           'envy': {
             templateUrl: 'app/envy/list/list_fresh.html',
             controller: 'EnvyListFreshCtrl'
@@ -22,5 +22,10 @@ angular.module('ambestApp')
         url: '/envy/create',
         templateUrl: 'app/envy/create/create.html',
         controller: 'EnvyCreateCtrl'
+      })
+      .state('envyView', {
+        url: '/envy/view/:id',
+        templateUrl: 'app/envy/view/view.html',
+        controller: 'EnvyViewCtrl'
       })
   })
