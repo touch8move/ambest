@@ -10,6 +10,7 @@ var express = require('express')
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/envy/ereply', require('./api/ereply'));
   app.use('/api/envys', require('./api/envy'));
   app.use('/api/cardinfos', require('./api/cardinfo'));
   app.use('/api/likes', require('./api/like'));
