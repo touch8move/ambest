@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/elike/elike.socket').register(socket);
   require('../api/ereply/ereply.socket').register(socket);
   require('../api/envy/envy.socket').register(socket);
   require('../api/like/like.socket').register(socket);
