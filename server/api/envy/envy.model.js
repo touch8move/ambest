@@ -7,7 +7,7 @@ var EnvySchema = new Schema({
   title: String,
   envyItems: [{
     type: Schema.ObjectId,
-    ref: 'envyItem'
+    ref: 'EnvyItem'
   }],
   replys: [{
     type: Schema.ObjectId,
