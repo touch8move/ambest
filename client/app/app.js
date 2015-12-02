@@ -80,7 +80,7 @@ angular.module('ambestApp', [
 		})
 	})
 	.factory('Replys', function ($resource) {
-		return $resource('/api/replys/:id', {
+		return $resource('/api/replys/:id/:type', {
 			id: '@_id'
 		}, {
 			update: {

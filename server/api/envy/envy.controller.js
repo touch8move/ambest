@@ -61,13 +61,13 @@ exports.create = function(req, res) {
             // console.error(err)
             if (err) handleError(res, err)
             item.imgPath = path.join(userRelPath,item.imgPath)
-            console.log(item)
+            // console.log(item)
             EnvyItem.create(item, function (err, eItem) {
               if(err) { 
-                console.log(err)
+                // console.log(err)
                 return handleError(res, err) 
               }
-              console.log('eItem', eItem)
+              // console.log('eItem', eItem)
               _envyItems.push(eItem)
               cb()
             })
@@ -119,7 +119,7 @@ exports.repSave = function (req, res) {
     if(err) return handleError(res, err)
     if(!envy) return res.status(404).send('Not Found')
     var creator = req.user
-    console.log(creator)
+    // console.log(creator)
     var insert = {
       createdBy: creator,
       text: req.body.reply.text
@@ -128,8 +128,8 @@ exports.repSave = function (req, res) {
       envy.replys.push(reply)
       envy.save(function (err) {
         if(err) return handleError(res, err)
-          console.log(envy)
-        return res.status(200).json(envy)
+          // console.log(envy)
+        return res.status(200).json(reply)
       })
     })
 
@@ -137,24 +137,23 @@ exports.repSave = function (req, res) {
 }
 
 exports.replyDel = function (req, res) {
-  Envy.findById(req.body.envyId)
-  .exec(function (err, envy) {
-    if(err) return handleError(res, err)
-    if(!envy) return res.status(404).send('Envy Not Found')
-    Reply.findById(req.body.RepId).exec(function (err, rep) {
+  // var populate = 'envyItems replys replys.createdBy'
+  // del envy rep
+  if (req.params.type != 'rep') {
+    return res.status(400).send('wrong access')
+  }
+  Reply.findById(req.params.repId, function (err, rep) {
+    rep.remove( function (err) {
       if(err) return handleError(res, err)
-      if(!rep) return res.status(404).send('Reply Not Found')
-      rep.remove( function (err) {
+      Envy.findById(req.params.id)
+      // .deepPopulate(populate)
+      .exec(function (err, envy) {
         if(err) return handleError(res, err)
-        for (var i; i<envy.replys.length;i++) {
-          if (envy.replys[i]._id==req.body.RepId) {
-            envy.replys[i].remove()
-            continue
-          }
-        }
-        envy.save(function (err) {
-          if(err) return handleError(res, err)
-          return res.status(200).json(envy)
+        if(!envy) return res.status(404).send('Envy Not Found')
+          console.log('found', envy )
+        envy.update({$pull:{replys:{_id:req.body.repId}}}, function (err, rep) {
+          if (err) return handleError(res, err)
+          return res.status(200).send('rep del success')
         })
       })
     })
