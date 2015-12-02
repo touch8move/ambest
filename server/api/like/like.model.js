@@ -16,8 +16,18 @@ var LikeSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	createdDate:{ type: Date, default: Date.now },
-	updatedDate:{ type: Date, default: Date.now }
+	created_at:{ type: Date },
+  	updated_at:{ type: Date }
+})
+
+LikeSchema.pre('save', function(next){
+  var now = new Date();
+  this.updated_at = now;
+  if ( !this.created_at ) {
+    this.created_at = now;
+  }
+  next();
 });
+
 
 module.exports = mongoose.model('Like', LikeSchema);
