@@ -7,6 +7,7 @@ var async = require('async')
 var _ = require('lodash');
 var Envy = require('./envy.model');
 var EnvyItem = require('./envyItem.model');
+var Reply = require('./../reply/reply.model')
 var config = require('./../../config/environment');
 
 // Get list of envys
@@ -19,8 +20,12 @@ exports.index = function(req, res) {
 
 // Get a single envy
 exports.show = function(req, res) {
+  var populate = 'envyItems replys replys.createdBy'
   Envy.findById(req.params.id)
-  .populate('envyItems replys replys.createdBy likes').exec(function (err, envy) {
+  // .populate('envyItems replys replys.createdBy')
+  .deepPopulate(populate)
+  // .populate({path:'likes', populate:{path:'createdBy'}})
+  .exec(function (err, envy) {
     if(err) { return handleError(res, err); }
     if(!envy) { return res.status(404).send('Not Found'); }
     return res.json(envy);
@@ -30,7 +35,8 @@ exports.show = function(req, res) {
 // Creates a new envy in the DB.
 exports.create = function(req, res) {
   var _envy = {
-    title:req.body.title
+    title:req.body.title,
+    createdBy: req.user
   }
   var _envyItems = []
   Envy.create(_envy, function(err, envy) {
@@ -70,10 +76,10 @@ exports.create = function(req, res) {
         if(err) return handleError(res, err)
         // console.log('envyItems', _envyItems)
         // console.log('before', _envy)
-        _envy.envyItems = _envyItems
+        envy.envyItems = _envyItems
         // console.log('after', _envy)
-        var updated = _.merge(envy, _envy)
-        updated.save(function(err) {
+        // var updated = _.merge(envy, _envy)
+        envy.save(function(err) {
           if(err) { return handleError(res, err); }
           return res.status(201).json(envy);
         })
@@ -107,7 +113,53 @@ exports.destroy = function(req, res) {
     });
   });
 };
+exports.repSave = function (req, res) {
+  Envy.findById(req.body.envyId)
+  .populate('envyItems replys replys.createdBy likes').exec(function (err, envy) {
+    if(err) return handleError(res, err)
+    if(!envy) return res.status(404).send('Not Found')
+    var creator = req.user
+    console.log(creator)
+    var insert = {
+      createdBy: creator,
+      text: req.body.reply.text
+    }
+    Reply.create(insert, function (err, reply) {
+      envy.replys.push(reply)
+      envy.save(function (err) {
+        if(err) return handleError(res, err)
+          console.log(envy)
+        return res.status(200).json(envy)
+      })
+    })
 
+  })
+}
+
+exports.replyDel = function (req, res) {
+  Envy.findById(req.body.envyId)
+  .exec(function (err, envy) {
+    if(err) return handleError(res, err)
+    if(!envy) return res.status(404).send('Envy Not Found')
+    Reply.findById(req.body.RepId).exec(function (err, rep) {
+      if(err) return handleError(res, err)
+      if(!rep) return res.status(404).send('Reply Not Found')
+      rep.remove( function (err) {
+        if(err) return handleError(res, err)
+        for (var i; i<envy.replys.length;i++) {
+          if (envy.replys[i]._id==req.body.RepId) {
+            envy.replys[i].remove()
+            continue
+          }
+        }
+        envy.save(function (err) {
+          if(err) return handleError(res, err)
+          return res.status(200).json(envy)
+        })
+      })
+    })
+  })
+}
 function handleError(res, err) {
   return res.status(500).send(err);
 }

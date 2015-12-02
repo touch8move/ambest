@@ -97,6 +97,10 @@ angular.module('ambestApp', [
 			id: '@_id'
 		})
 	})
+
+	.factory('EnvyReps', function ($resource) {
+		return $resource('/api/envys/rep')
+	})
 	
 	.run(function ($rootScope, $location, Auth, $templateCache) {
 		// Redirect to login if route requires auth and you're not logged in

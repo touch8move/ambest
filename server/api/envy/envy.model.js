@@ -1,7 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var deepPopulate = require('mongoose-deep-populate')(mongoose)
+var Schema = mongoose.Schema
 
 var EnvySchema = new Schema({
   title: String,
@@ -34,5 +35,5 @@ EnvySchema.pre('save', function(next){
   }
   next();
 });
-
+EnvySchema.plugin(deepPopulate);
 module.exports = mongoose.model('Envy', EnvySchema);
