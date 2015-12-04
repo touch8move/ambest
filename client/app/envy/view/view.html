@@ -15,11 +15,11 @@
     <h4 flex="70">{{envy.title}}</h4>
     <span flex></span>
     <div flex>
-    <md-button ng-if="envy.isMine" class="md-raised md-warn" ng-click="editEnvy(envy)">
+    <md-button ng-if="auth.getCurrentUser()._id == envy.createdBy" class="md-raised md-warn" ng-click="editEnvy(envy)">
       <ng-md-icon icon="create"></ng-md-icon>
     </md-button></div>
     <div flex>
-    <md-button ng-if="envy.isMine" class="md-raised md-warn" ng-click="delEnvy(envy)">
+    <md-button ng-if="auth.getCurrentUser()._id == envy.createdBy" class="md-raised md-warn" ng-click="delEnvy(envy)">
       <ng-md-icon icon="delete"></ng-md-icon>
     </md-button></div>
   </div>

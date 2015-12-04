@@ -95,6 +95,10 @@ angular.module('ambestApp', [
 	.factory('Envys', function ($resource) {
 		return $resource('/api/envys/:id', {
 			id: '@_id'
+		}, {
+			update: {
+				method: 'PUT'
+			}
 		})
 	})
 

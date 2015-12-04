@@ -20,6 +20,7 @@ angular.module('ambestApp')
       })
       .state('envyCreate', {
         url: '/envy/create',
+        authenticate:true,
         templateUrl: 'app/envy/create/create.html',
         controller: 'EnvyCreateCtrl'
       })
@@ -27,5 +28,11 @@ angular.module('ambestApp')
         url: '/envy/view/:id',
         templateUrl: 'app/envy/view/view.html',
         controller: 'EnvyViewCtrl'
+      })
+      .state('envyEdit', {
+        url: '/envy/edit/:id',
+        authenticate:true,
+        templateUrl: 'app/envy/edit/edit.html',
+        controller: 'EnvyEditCtrl'
       })
   })

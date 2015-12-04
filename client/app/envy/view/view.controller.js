@@ -1,18 +1,17 @@
 'use strict';
 
 angular.module('ambestApp')
-  .controller('EnvyViewCtrl', function ($scope, $stateParams, Envys, EnvyReps, Replys, Auth, $mdDialog) {
+  .controller('EnvyViewCtrl', function ($scope, $stateParams, Envys, EnvyReps, Replys, Auth, $mdDialog, $window, $location) {
     $scope.envy = null
-    $scope.repIsMine = false
     $scope.auth = Auth
     $scope.envyId = $stateParams.id
     Envys.get({id:$stateParams.id}, function (envy) {
-      if (envy.createdBy == Auth.getCurrentUser()._id) {
-        envy.isMine = true
-      } else {
-        envy.isMine = false
-      }
-      console.log(envy)
+      // if (envy.createdBy == Auth.getCurrentUser()._id) {
+      //   envy.isMine = true
+      // } else {
+      //   envy.isMine = false
+      // }
+      // console.log(envy)
       $scope.envy = envy
     })
 
@@ -41,5 +40,26 @@ angular.module('ambestApp')
         })
       }, function () {
       })
+    }
+
+    $scope.delEnvy = function (envy) {
+      var confirm = $mdDialog.confirm()
+        .title('Confirm')
+        .content('would you wanna delete this Envy ?')
+        .ariaLabel('Envy')
+        .ok('Yes')
+        .cancel('No')
+      $mdDialog.show(confirm).then(function () {
+        envy.$remove(function (ret) {
+          $window.history.back()
+        }, function (err) {
+          console.log(err)
+        })
+      }, function () {
+      })
+      
+    }
+    $scope.editEnvy = function (envy) {
+      $location.path('/envy/edit/'+envy._id)
     }
   });

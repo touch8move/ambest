@@ -95,7 +95,7 @@ exports.destroy = function(req, res) {
         return res.status(204).send('No Content');
       })
     } else {
-      return res.status(403).send({message: 'User is not authorized'})
+      return res.status(403).send({message: 'You are not authorized'})
     }
   });
 };
