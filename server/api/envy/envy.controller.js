@@ -12,7 +12,7 @@ var config = require('./../../config/environment');
 
 // Get list of envys
 exports.index = function(req, res) {
-  Envy.find().populate('envyItems').exec(function (err, envys) {
+  Envy.find().populate('envyItems').sort('-created_at').exec(function (err, envys) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(envys);
   });
@@ -94,23 +94,32 @@ exports.update = function(req, res) {
   Envy.findById(req.params.id, function (err, envy) {
     if (err) { return handleError(res, err); }
     if(!envy) { return res.status(404).send('Not Found'); }
-    var updated = _.merge(envy, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.status(200).json(envy);
-    });
+    if (req.user.id == envy.createdBy) {
+      var updated = _.merge(envy, req.body);
+      updated.save(function (err) {
+        if (err) { return handleError(res, err); }
+        return res.status(200).json(envy);
+      });
+    } else {
+      return res.status(403).send({message: 'You are not authorized'})
+    }
   });
 };
 
 // Deletes a envy from the DB.
 exports.destroy = function(req, res) {
+
   Envy.findById(req.params.id, function (err, envy) {
     if(err) { return handleError(res, err); }
     if(!envy) { return res.status(404).send('Not Found'); }
-    envy.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.status(204).send('No Content');
-    });
+    if (req.user.id == envy.createdBy) {
+      envy.remove(function(err) {
+        if(err) { return handleError(res, err); }
+        return res.status(204).send('No Content');
+      });
+    } else {
+      return res.status(403).send({message: 'You are not authorized'})
+    }
   });
 };
 exports.repSave = function (req, res) {
@@ -136,29 +145,29 @@ exports.repSave = function (req, res) {
   })
 }
 
-exports.replyDel = function (req, res) {
-  // var populate = 'envyItems replys replys.createdBy'
-  // del envy rep
-  if (req.params.type != 'rep') {
-    return res.status(400).send('wrong access')
-  }
-  Reply.findById(req.params.repId, function (err, rep) {
-    rep.remove( function (err) {
-      if(err) return handleError(res, err)
-      Envy.findById(req.params.id)
-      // .deepPopulate(populate)
-      .exec(function (err, envy) {
-        if(err) return handleError(res, err)
-        if(!envy) return res.status(404).send('Envy Not Found')
-          console.log('found', envy )
-        envy.update({$pull:{replys:{_id:req.body.repId}}}, function (err, rep) {
-          if (err) return handleError(res, err)
-          return res.status(200).send('rep del success')
-        })
-      })
-    })
-  })
-}
+// exports.replyDel = function (req, res) {
+//   // var populate = 'envyItems replys replys.createdBy'
+//   // del envy rep
+//   if (req.params.type != 'rep') {
+//     return res.status(400).send('wrong access')
+//   }
+//   Reply.findById(req.params.repId, function (err, rep) {
+//     rep.remove( function (err) {
+//       if(err) return handleError(res, err)
+//       Envy.findById(req.params.id)
+//       // .deepPopulate(populate)
+//       .exec(function (err, envy) {
+//         if(err) return handleError(res, err)
+//         if(!envy) return res.status(404).send('Envy Not Found')
+//           console.log('found', envy )
+//         envy.update({$pull:{replys:{_id:req.body.repId}}}, function (err, rep) {
+//           if (err) return handleError(res, err)
+//           return res.status(200).send('rep del success')
+//         })
+//       })
+//     })
+//   })
+// }
 function handleError(res, err) {
   return res.status(500).send(err);
 }
