@@ -1,18 +1,21 @@
 'use strict';
 
 angular.module('ambestApp')
-  .controller('EnvyViewCtrl', function ($scope, $stateParams, Envys, EnvyReps, Replys, Auth, $mdDialog, $window, $location) {
+  .controller('EnvyViewCtrl', function ($scope, $stateParams, Envys, EnvyReps, Replys, Likes, Auth, $mdDialog, $window, $location) {
     $scope.envy = null
     $scope.auth = Auth
     $scope.envyId = $stateParams.id
+    $scope.likeIndex = -1
     Envys.get({id:$stateParams.id}, function (envy) {
-      // if (envy.createdBy == Auth.getCurrentUser()._id) {
-      //   envy.isMine = true
-      // } else {
-      //   envy.isMine = false
-      // }
-      // console.log(envy)
       $scope.envy = envy
+      $scope.envy.likes.every(function (like, index) {
+        if(like.createdBy == Auth.getCurrentUser()._id) {
+          $scope.likeIndex = index
+          return false
+        } else {
+          return true
+        }
+      })
     })
 
     $scope.replyPost = function () {
@@ -62,5 +65,30 @@ angular.module('ambestApp')
     }
     $scope.editEnvy = function (envy) {
       $location.path('/envy/edit/'+envy._id)
+    }
+    
+    $scope.like = function () {
+      Likes.save({id:$scope.envy._id}, {createdBy:Auth.getCurrentUser()._id}, function (ret) {
+        console.log(ret.like)
+        $scope.envy.likes.push(ret.like)
+        $scope.likeIndex = $scope.envy.likes.length -1
+      }, function (err) {
+        console.error(err)
+      })
+    }
+    $scope.cancelLike = function () {
+      Likes.get({id:$scope.envy.likes[$scope.likeIndex]._id}, function (like) {
+        console.log(like)
+        like.$delete(function (ret) {
+          console.log('before', $scope.envy.likes)
+          $scope.envy.likes.splice($scope.likeIndex, 1)
+          console.log('after', $scope.envy.likes)
+          $scope.likeIndex = -1
+        }, function (err) {
+          console.error(err)
+        })
+      }, function (err) {
+        console.error(err)
+      })
     }
   });

@@ -20,7 +20,7 @@ exports.index = function(req, res) {
 
 // Get a single envy
 exports.show = function(req, res) {
-  var populate = 'envyItems replys replys.createdBy'
+  var populate = 'envyItems replys replys.createdBy likes'
   Envy.findById(req.params.id)
   // .populate('envyItems replys replys.createdBy')
   .deepPopulate(populate)

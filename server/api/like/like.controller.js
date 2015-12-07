@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Like = require('./like.model');
+var Envy = require('./../envy/envy.model')
 
 exports.hasAuthorization = function (req, res, next) {
   if (req.like.createdBy.id !== req.user.id) {
@@ -9,6 +10,14 @@ exports.hasAuthorization = function (req, res, next) {
       message: 'User is not authorized'
     })
   }
+}
+
+exports.get = function (req, res) {
+  Like.findById(req.params.id, function (err, like) {
+    if(err) return handleError(res, err)
+    console.log(like)
+    return res.status(200).json(like)
+  })
 }
 // Get list of likes
 exports.isLike = function(req, res) {
@@ -60,7 +69,6 @@ exports.update = function(req, res) {
     });
   });
 };
-
 // Deletes a like from the DB.
 exports.destroy = function(req, res) {
   Like.findById(req.params.id, function (err, like) {
@@ -78,7 +86,24 @@ exports.destroy = function(req, res) {
     }
   })
 }
-
+exports.like = function (req, res) {
+  if(req.body.createdBy == req.user.id) {
+    Envy.findById(req.params.id)
+    .populate('likes')
+    .exec(function (err, envy) {
+      Like.create(req.body, function (err, like) {
+        if(err) return handleError(res, err)
+        envy.likes.push(like)
+        envy.save(function (err) {
+          if (err) return handleError(res, err)
+          return res.status(200).json({'like':like})
+        })
+      })
+    })
+  } else {
+    return res.status(403).send({message: 'User is not authorized'})
+  }
+}
 function handleError(res, err) {
   return res.status(500).send(err);
 }

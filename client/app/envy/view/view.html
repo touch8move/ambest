@@ -12,17 +12,18 @@
 
 <md-content class="ambest-contents">
   <div layout="row" layout-wrap layout-align="center center">
-    <h4 flex="70">{{envy.title}}</h4>
-    <span flex></span>
+    <h4 flex="60">{{envy.title}}</h4>
+    {{hasLike}}
     <div flex>
-    <md-button ng-if="auth.getCurrentUser()._id == envy.createdBy" class="md-raised md-warn" ng-click="editEnvy(envy)">
-      <ng-md-icon icon="create"></ng-md-icon>
-    </md-button></div>
+      <md-button ng-if="auth.getCurrentUser()._id == envy.createdBy" class="md-raised md-warn" ng-click="editEnvy(envy)" aria-label="edit">
+        <ng-md-icon icon="create"></ng-md-icon>
+      </md-button>
+    </div>
     <div flex>
-    <md-button ng-if="auth.getCurrentUser()._id == envy.createdBy" class="md-raised md-warn" ng-click="delEnvy(envy)">
-      <ng-md-icon icon="delete"></ng-md-icon>
-    </md-button></div>
-  </div>
+      <md-button ng-if="auth.getCurrentUser()._id == envy.createdBy" class="md-raised md-warn" ng-click="delEnvy(envy)" aria-label="delete">
+        <ng-md-icon icon="delete"></ng-md-icon>
+      </md-button></div>
+    </div>
   <md-card class="md-card md-whiteframe-15dp" ng-repeat="item in envy.envyItems">
     <img ng-src="{{item.imgPath}}/{{item.fileName}}">
     <md-card-content>
@@ -31,7 +32,16 @@
       </p>
     </md-card-content>
   </md-card>
+  <div>
 
+    <md-button ng-if="likeIndex == -1" class="md-raised md-primary" aria-label="thumbup" ng-click="like()">
+      <ng-md-icon icon="thumb_up"></ng-md-icon>
+    </md-button >
+    <md-button ng-if="likeIndex > -1" class="md-raised md-warn" aria-label="thumbup" ng-click="cancelLike()">
+      <ng-md-icon icon="thumb_up"></ng-md-icon>
+    </md-button >
+    {{envy.likes.length}}
+  </div>
   <div class="ambest-reply">
     <md-list>
       <md-subheader class="md-no-sticky">{{replysCount}} Replys...</md-subheader>
