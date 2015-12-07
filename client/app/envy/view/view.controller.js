@@ -19,14 +19,20 @@ angular.module('ambestApp')
     })
 
     $scope.replyPost = function () {
+      // console.log($scope.repPost.text.length)
+      if (!$scope.reply || $scope.reply.length == 0) {
+        // console.log($scope.repPost.length)
+        return
+      }
+      console.log($scope.reply)
       var rep = {
         envyId: $scope.envyId,
-        reply: $scope.repPost
+        reply: $scope.reply
       }
       Replys.save({type:'envy'}, rep, function (ret) {
         console.log(ret)
         $scope.envy.replys.push(ret)
-        $scope.repPost.text = ''
+        $scope.reply = ''
       })
     }
 

@@ -54,7 +54,7 @@ exports.newrep = function (req, res) {
       // console.log(creator)
       var insert = {
         createdBy: creator,
-        text: req.body.reply.text
+        text: req.body.reply
       }
       Reply.create(insert, function (err, reply) {
         envy.replys.push(reply)
