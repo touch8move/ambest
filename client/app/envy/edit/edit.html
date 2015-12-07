@@ -11,6 +11,7 @@
 </md-toolbar>
 
 <md-content class="ambest-contents">
+  <form name="envy" role="form" ng-submit="save()">
   <md-input-container>
     <label>Title</label>
     <input type="text" ng-model="envy.title" required md-maxlength="100" minlength="5" aria-label="Input Title">
@@ -25,17 +26,21 @@
       <ng-md-icon icon="photo" style="fill:#ffffff"></ng-md-icon>
     </md-button>
 
-    <img flow-img="$flow.files[0]" ng-src="{{item.imgPath}}" class="ambest-upload-image"/>
+    <img flow-img="$flow.files[0]" ng-if="item.imgPath" ng-src="{{item.imgPath}}/{{item.fileName}}" class="ambest-upload-image"/>
+    <img flow-img="$flow.files[0]" ng-if="!item.imgPath" class="ambest-upload-image"/>
+
     {{item.imgPath}}
     <md-input-container>
       <label>Content</label>
-     <textarea ng-model="item.text" md-maxlength="20"></textarea>
+     <textarea ng-model="item.text" md-maxlength="200"></textarea>
     </md-input-container>
   </md-card>
   <md-button class="md-raised md-primary" ng-click="add()" aria-label="Add">
     <ng-md-icon icon="add" aria-label="add"></ng-md-icon>
   </md-button>
-  <md-button class="md-raised md-warn" ng-click="save()">
+  <md-button class="md-raised md-warn">
+    <input type="submit" value="" />
     <ng-md-icon icon="done" aria-label="done"></ng-md-icon>
   </md-button>
+  </form>
 </md-content>

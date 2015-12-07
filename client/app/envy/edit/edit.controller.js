@@ -1,21 +1,25 @@
 'use strict';
 
 angular.module('ambestApp')
-  .controller('EnvyEditCtrl', function ($scope, Envys, $location, $stateParams) {
+  .controller('EnvyEditCtrl', function ($scope, Envys, $location, $stateParams, $window) {
     $scope.envy = null
     Envys.get({id:$stateParams.id}, function (envy) {
-      // if (envy.createdBy == Auth.getCurrentUser()._id) {
-      //   envy.isMine = true
-      // } else {
-      //   envy.isMine = false
-      // }
-      // console.log(envy)
+      console.log(envy)
       $scope.envy = envy
     })
 
     $scope.save = function () {
+      console.log($scope.envy)
       $scope.envy.$update(function (envy) {
-        $location.path('/envy/'+envy._id)
+        $window.history.back()
       })
+    }
+
+    $scope.getTmpFileName = function ($file, $message, $index) {
+      $scope.envy.envyItems[$index].imgPath = ''
+      $scope.envy.envyItems[$index].fileName = $message
+    }
+    $scope.add = function () {
+      $scope.envy.envyItems.push({imgPath:'', fileName:'', text:''})
     }
   })

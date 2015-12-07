@@ -9,16 +9,16 @@ angular.module('ambestApp')
     }
     $scope.getTmpFileName = function ($file, $message, $index) {
       console.log($message)
-      $scope.envy.envyItems[$index].imgPath = $message
+      $scope.envy.envyItems[$index].fileName = $message
     }
     $scope.add = function () {
-      $scope.envy.envyItems.push({imgPath:'', text:''})
+      $scope.envy.envyItems.push({imgPath:'', fileName:'', text:''})
     }
     $scope.add()
 
     $scope.create = function () {
       Envys.save($scope.envy, function (envy) {
-        $location.path('/envy/'+envy._id)
+        $location.path('/envy/view/'+envy._id)
       })
     }
   });

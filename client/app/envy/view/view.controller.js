@@ -51,6 +51,7 @@ angular.module('ambestApp')
         .cancel('No')
       $mdDialog.show(confirm).then(function () {
         envy.$remove(function (ret) {
+          // $location.path('/envy/fresh')
           $window.history.back()
         }, function (err) {
           console.log(err)

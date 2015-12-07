@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var EnvyItemSchema = new Schema({
   imgPath:String,
+  fileName:String,
   text: String,
   createdBy: {
     type: Schema.ObjectId,
